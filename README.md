@@ -102,7 +102,22 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 4. Build for Production
+### 4. Run Automated Testing Suite & Linting
+```bash
+# Run all unit, integration, and component tests
+npm test
+
+# Run tests in interactive watch mode
+npm run test:watch
+
+# Generate V8 coverage report
+npm run test:coverage
+
+# Run ESLint validation
+npm run lint
+```
+
+### 5. Build for Production
 ```bash
 npm run build
 npm run start

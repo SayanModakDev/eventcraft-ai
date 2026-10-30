@@ -22,38 +22,38 @@ export function LogoMark({ className = "w-10 h-10" }: { className?: string }) {
       >
         <defs>
           <linearGradient id="logoBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#1E1B4B" />
-            <stop offset="50%" stop-color="#0F172A" />
-            <stop offset="100%" stop-color="#030712" />
+            <stop offset="0%" stopColor="#1E1B4B" />
+            <stop offset="50%" stopColor="#0F172A" />
+            <stop offset="100%" stopColor="#030712" />
           </linearGradient>
 
           <linearGradient id="logoBorderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#6366F1" />
-            <stop offset="50%" stop-color="#A855F7" />
-            <stop offset="100%" stop-color="#F59E0B" />
+            <stop offset="0%" stopColor="#6366F1" />
+            <stop offset="50%" stopColor="#A855F7" />
+            <stop offset="100%" stopColor="#F59E0B" />
           </linearGradient>
 
           <linearGradient id="facetPrimary" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#6366F1" />
-            <stop offset="60%" stop-color="#4F46E5" />
-            <stop offset="100%" stop-color="#7C3AED" />
+            <stop offset="0%" stopColor="#6366F1" />
+            <stop offset="60%" stopColor="#4F46E5" />
+            <stop offset="100%" stopColor="#7C3AED" />
           </linearGradient>
 
           <linearGradient id="facetSecondary" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#4338CA" />
-            <stop offset="60%" stop-color="#6D28D9" />
-            <stop offset="100%" stop-color="#9333EA" />
+            <stop offset="0%" stopColor="#4338CA" />
+            <stop offset="60%" stopColor="#6D28D9" />
+            <stop offset="100%" stopColor="#9333EA" />
           </linearGradient>
 
           <linearGradient id="sparkGold" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#FEF08A" />
-            <stop offset="50%" stop-color="#FBBF24" />
-            <stop offset="100%" stop-color="#F59E0B" />
+            <stop offset="0%" stopColor="#FEF08A" />
+            <stop offset="50%" stopColor="#FBBF24" />
+            <stop offset="100%" stopColor="#F59E0B" />
           </linearGradient>
 
           <linearGradient id="accentCyan" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#38BDF8" />
-            <stop offset="100%" stop-color="#06B6D4" />
+            <stop offset="0%" stopColor="#38BDF8" />
+            <stop offset="100%" stopColor="#06B6D4" />
           </linearGradient>
         </defs>
 
