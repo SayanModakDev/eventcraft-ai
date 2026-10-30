@@ -87,3 +87,4 @@ export default function DayOfScheduleView({ schedule = [] }: DayOfScheduleViewPr
     </section>
   );
 }
+
