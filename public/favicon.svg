@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="50%" stop-color="#090D1A" />
+      <stop offset="100%" stop-color="#030712" />
+    </linearGradient>
+
+    <!-- Border Glow Gradient -->
+    <linearGradient id="borderGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#A855F7" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0.8" />
+    </linearGradient>
+
+    <!-- Primary Crystal Facet Gradient (Indigo to Violet) -->
+    <linearGradient id="primaryFacet" x1="15%" y1="10%" x2="85%" y2="90%">
+      <stop offset="0%" stop-color="#6366F1" />
+      <stop offset="50%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#7C3AED" />
+    </linearGradient>
+
+    <!-- Secondary Crystal Facet (Deep Royal Violet) -->
+    <linearGradient id="secondaryFacet" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4338CA" />
+      <stop offset="50%" stop-color="#6D28D9" />
+      <stop offset="100%" stop-color="#9333EA" />
+    </linearGradient>
+
+    <!-- Top Highlight Facet -->
+    <linearGradient id="highlightFacet" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#C084FC" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#818CF8" stop-opacity="0.3" />
+    </linearGradient>
+
+    <!-- Golden Celebration Spark Gradient -->
+    <linearGradient id="goldSpark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A" />
+      <stop offset="40%" stop-color="#FBBF24" />
+      <stop offset="100%" stop-color="#F59E0B" />
+    </linearGradient>
+
+    <!-- Accent Emerald/Cyan Confetti Gradient -->
+    <linearGradient id="accentCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+
+    <!-- Soft Ambient Glow -->
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="sparkleGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Container Base with Rounded Rect -->
+  <rect x="16" y="16" width="480" height="480" rx="120" fill="url(#bgGrad)" stroke="url(#borderGlow)" stroke-width="6" />
+
+  <!-- Ambient Glow Behind Crystal Emblem -->
+  <circle cx="256" cy="256" r="130" fill="#7C3AED" opacity="0.22" filter="url(#softGlow)" />
+  <circle cx="256" cy="240" r="70" fill="#F59E0B" opacity="0.18" filter="url(#softGlow)" />
+
+  <!-- Geometric Emblem Facets -->
+  <g id="geometric-crystal-mark">
+    <!-- Left Wing / Calendar Node Prism -->
+    <path d="M 256 100 L 140 186 L 175 320 L 256 380 L 256 256 Z" fill="url(#primaryFacet)" opacity="0.95" />
+    
+    <!-- Right Wing / Celebration Prism -->
+    <path d="M 256 100 L 372 186 L 337 320 L 256 380 L 256 256 Z" fill="url(#secondaryFacet)" opacity="0.95" />
+
+    <!-- Top Crown Facet -->
+    <path d="M 256 100 L 198 144 L 256 188 L 314 144 Z" fill="url(#highlightFacet)" />
+
+    <!-- Bottom Anchor Facet -->
+    <path d="M 175 320 L 256 380 L 256 420 L 155 350 Z" fill="#3730A3" opacity="0.8" />
+    <path d="M 337 320 L 256 380 L 256 420 L 357 350 Z" fill="#581C87" opacity="0.8" />
+
+    <!-- Floating Celebration Confetti Particles -->
+    <!-- Top-left celebratory star -->
+    <circle cx="120" cy="140" r="7" fill="#FBBF24" />
+    <circle cx="106" cy="190" r="4.5" fill="#38BDF8" opacity="0.8" />
+    <path d="M 120 130 Q 123 137 130 140 Q 123 143 120 150 Q 117 143 110 140 Q 117 137 120 130 Z" fill="#FEF08A" opacity="0.85" />
+
+    <!-- Top-right celebratory burst node -->
+    <circle cx="392" cy="140" r="7" fill="#F59E0B" />
+    <circle cx="406" cy="190" r="4.5" fill="#C084FC" opacity="0.85" />
+    <path d="M 392 130 Q 395 137 402 140 Q 395 143 392 150 Q 389 143 382 140 Q 389 137 392 130 Z" fill="#FEF08A" opacity="0.85" />
+
+    <!-- Bottom Confetti Streamers -->
+    <path d="M 140 370 Q 120 395 135 425" stroke="url(#accentCyan)" stroke-width="4.5" stroke-linecap="round" fill="none" opacity="0.75" />
+    <path d="M 372 370 Q 392 395 377 425" stroke="url(#goldSpark)" stroke-width="4.5" stroke-linecap="round" fill="none" opacity="0.75" />
+
+    <!-- Central AI Core Spark (Superimposed Multi-Point Crystal Diamond) -->
+    <g filter="url(#sparkleGlow)">
+      <!-- Central 4-point AI Diamond Star -->
+      <path d="M 256 160 Q 256 256 352 256 Q 256 256 256 352 Q 256 256 160 256 Q 256 256 256 160 Z" fill="url(#goldSpark)" />
+      
+      <!-- Inner Diamond Facet -->
+      <polygon points="256,204 294,256 256,308 218,256" fill="#FFFFFF" opacity="0.92" />
+      
+      <!-- Center Bright Core -->
+      <circle cx="256" cy="256" r="10" fill="#FEF08A" />
+    </g>
+
+    <!-- Diagonal Micro-Sparks for Celebration Feel -->
+    <circle cx="210" cy="210" r="3.5" fill="#FFFFFF" opacity="0.9" />
+    <circle cx="302" cy="210" r="3.5" fill="#FFFFFF" opacity="0.9" />
+    <circle cx="210" cy="302" r="3.5" fill="#FFFFFF" opacity="0.9" />
+    <circle cx="302" cy="302" r="3.5" fill="#FFFFFF" opacity="0.9" />
+  </g>
+</svg>

@@ -50,16 +50,21 @@ EventCraft AI is a production-ready, autonomous celebration and event planning w
 │   │   ├── plan/route.ts      # Heavy generation route (Gemini 3.8 Flash)
 │   │   └── refine/route.ts    # Lightweight co-pilot route (Gemini 3.1 Flash-Lite)
 │   ├── globals.css            # Glassmorphism, animations, & @media print styles
+│   ├── icon.svg               # Dynamic vector favicon emblem
 │   ├── layout.tsx             # Root layout with navbar & dual-model indicators
 │   └── page.tsx               # Main dashboard, tab visualizer & state sync
 ├── components/
 │   ├── BudgetVisualizer.tsx   # Budget cards, progress bar, & cost-saving tips
 │   ├── CreativeAesthetics.tsx # Decor, playlist vibes, & invitation copy
 │   ├── EventIntakeForm.tsx    # Preset buttons, currency selector, sliders
+│   ├── Logo.tsx               # Custom SVG branding & geometric emblem component
 │   ├── QuickRefineChat.tsx    # Slide-over chat drawer (Gemini 3.1 Flash-Lite)
 │   ├── StepLoader.tsx         # Multi-stage animated generation loader
 │   ├── TimelineChecklist.tsx  # Phased milestones & task completion tracker
 │   └── VendorPlaybook.tsx     # Deliverables, negotiation scripts, & red flags
+├── public/
+│   ├── favicon.svg            # Standalone geometric celebration & AI facet favicon
+│   └── logo.svg               # Production SVG brand logo & wordmark lockup
 ├── lib/
 │   ├── gemini.ts              # Google GenAI client & fallback model routing
 │   ├── presets.ts             # Demo presets & instant evaluation blueprints

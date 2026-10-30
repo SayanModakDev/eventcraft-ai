@@ -31,6 +31,7 @@ import { EventPlan, EventIntakeData } from "@/types/event";
 import { DEMO_PRESETS, DemoPreset } from "@/lib/presets";
 import { formatCurrency } from "@/lib/utils";
 import confetti from "canvas-confetti";
+import Logo from "@/components/Logo";
 
 type ActiveTab = "overview" | "budget" | "timeline" | "vendors" | "aesthetics" | "json";
 
@@ -170,8 +171,13 @@ export default function HomePage() {
       <StepLoader isLoading={isLoading} />
 
       {/* Hero Intro Section (Hidden on Print) */}
-      <div className="text-center space-y-4 max-w-3xl mx-auto no-print">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/20 text-xs text-fuchsia-300 font-semibold mb-2">
+      <div className="text-center space-y-5 max-w-3xl mx-auto no-print flex flex-col items-center">
+        {/* Brand Logo Showcase */}
+        <div className="pt-2">
+          <Logo size="lg" variant="stacked" showSubtitle={false} />
+        </div>
+
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-amber-500/10 border border-indigo-500/20 text-xs text-indigo-300 font-semibold">
           <Sparkles className="w-3.5 h-3.5 text-amber-300" />
           <span>Hack2skill &bull; PromptWars Challenge 5 Autonomous Event Agent</span>
         </div>
