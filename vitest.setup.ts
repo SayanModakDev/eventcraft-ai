@@ -15,3 +15,4 @@ if (typeof window !== 'undefined') {
 if (typeof window !== 'undefined') {
   window.scrollTo = vi.fn();
 }
+
