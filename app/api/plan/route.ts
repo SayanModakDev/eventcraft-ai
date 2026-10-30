@@ -11,6 +11,7 @@ import { genAI, PRIMARY_HEAVY_MODELS, cleanAndParseJSON } from "@/lib/gemini";
 import { EventPlan } from "@/types/event";
 import { DEMO_PRESETS } from "@/lib/presets";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { getCache, setCache, hashPayload } from "@/lib/cache";
 
 export const runtime = "nodejs";
 export const maxDuration = 60; // 60 seconds max execution time for heavy model reasoning
@@ -114,6 +115,22 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       specialRequirements,
     } = validation.data;
 
+    // 3. In-Memory Cache Lookup (eliminates duplicate calls and provides 0ms responses)
+    const cacheKey = `plan_${hashPayload(validation.data)}`;
+    const cachedResult = getCache<{
+      plan: EventPlan;
+      model_used: string;
+      is_live: boolean;
+      note?: string;
+    }>(cacheKey);
+
+    if (cachedResult) {
+      return NextResponse.json({
+        ...cachedResult,
+        is_cached: true,
+      });
+    }
+
     const userPrompt = `
 Generate a Master Event Blueprint for the following celebration:
 - Event Title: "${eventTitle}"
@@ -194,11 +211,13 @@ Strictly produce a JSON response adhering to this JSON structure:
             parsed.location = locationOrVenue;
             parsed.eventType = eventType;
 
-            return NextResponse.json({
+            const liveResponse = {
               plan: parsed,
               model_used: modelName,
               is_live: true,
-            });
+            };
+            setCache(cacheKey, liveResponse);
+            return NextResponse.json(liveResponse);
           }
         } catch (err) {
           console.warn(`Model ${modelName} failed, attempting fallback candidate:`, err);
@@ -234,14 +253,17 @@ Strictly produce a JSON response adhering to this JSON structure:
       }));
     }
 
-    return NextResponse.json({
+    const fallbackResponse = {
       plan: fallbackPlan,
       model_used: "gemini-3.8-flash (intelligent local engine)",
       is_live: false,
       note: !process.env.GEMINI_API_KEY
         ? "Running in zero-config demo mode. Add GEMINI_API_KEY to .env.local for live Gemini 3.8 Flash generation."
         : "Live API quota limit reached; served dynamic calculated blueprint.",
-    });
+    };
+    setCache(cacheKey, fallbackResponse);
+
+    return NextResponse.json(fallbackResponse);
   } catch (error) {
     console.error("Plan generation API unexpected error:", error);
     return NextResponse.json(

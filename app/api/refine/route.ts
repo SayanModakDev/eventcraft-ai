@@ -10,6 +10,7 @@ import { z } from "zod";
 import { genAI, LIGHTWEIGHT_COPILOT_MODELS } from "@/lib/gemini";
 import { EventPlan } from "@/types/event";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { getCache, setCache, hashPayload } from "@/lib/cache";
 
 export const runtime = "nodejs";
 
@@ -71,6 +72,24 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const { userRequest, currentPlan } = validation.data;
 
+    // 3. In-Memory Cache Lookup (sub-millisecond repeat resolutions)
+    const cacheKey = `refine_${hashPayload({
+      userRequest,
+      title: currentPlan?.event_title,
+      budget: currentPlan?.total_budget,
+      guests: currentPlan?.guest_count,
+    })}`;
+    const cachedRefine = getCache<{
+      answer: string;
+      model_used: string;
+      is_live: boolean;
+      suggestedPlanUpdate?: Partial<EventPlan>;
+    }>(cacheKey);
+
+    if (cachedRefine) {
+      return NextResponse.json({ ...cachedRefine, is_cached: true });
+    }
+
     const planSummary = currentPlan
       ? `Current Event: "${currentPlan.event_title}", Budget: ${currentPlan.total_budget} ${currentPlan.currency}, Guests: ${currentPlan.guest_count || 100}, Theme: "${currentPlan.theme_tagline}"`
       : "No active event plan loaded yet.";
@@ -122,12 +141,14 @@ Answer directly according to your instructions.`;
           const result = await model.generateContent(prompt);
           const answer = result.response.text();
 
-          return NextResponse.json({
+          const liveRefineResponse = {
             answer: answer.trim(),
             model_used: modelName,
             is_live: true,
             suggestedPlanUpdate,
-          });
+          };
+          setCache(cacheKey, liveRefineResponse);
+          return NextResponse.json(liveRefineResponse);
         } catch (err) {
           console.warn(`Lite model ${modelName} failed, attempting next candidate:`, err);
         }
@@ -149,12 +170,15 @@ Answer directly according to your instructions.`;
       fallbackAnswer = `• Suggestion: To adapt your "${currentPlan?.event_title || "event"}", prioritize your venue and primary sound/vibe experience first.\n• Every dollar redirected from static print collateral towards interactive food bars or live entertainment yields 3x higher guest satisfaction.\n• Keep 5% of your total budget aside in an unallocated contingency fund for last-minute permits or weather adjustments.`;
     }
 
-    return NextResponse.json({
+    const fallbackRefineResponse = {
       answer: fallbackAnswer,
       model_used: "gemini-3.1-flash-lite (intelligent local engine)",
       is_live: false,
       suggestedPlanUpdate,
-    });
+    };
+    setCache(cacheKey, fallbackRefineResponse);
+
+    return NextResponse.json(fallbackRefineResponse);
   } catch (error) {
     console.error("Refine API unexpected error:", error);
     return NextResponse.json(

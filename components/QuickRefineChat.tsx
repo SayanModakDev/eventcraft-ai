@@ -1,18 +1,12 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import {
-  Zap,
-  Send,
-  X,
-  Sparkles,
-  Minimize2,
-  Maximize2,
-  Bot,
-  User,
-  RotateCcw,
-} from "lucide-react";
+import { Zap } from "lucide-react";
 import { EventPlan, ChatMessage } from "@/types/event";
+import ChatMessageItem from "@/components/ui/ChatMessageItem";
+import QuickActionPills from "@/components/ui/QuickActionPills";
+import ChatDrawerHeader from "@/components/ui/ChatDrawerHeader";
+import ChatInputBar from "@/components/ui/ChatInputBar";
 
 interface QuickRefineChatProps {
   currentPlan: EventPlan | null;
@@ -71,10 +65,7 @@ export default function QuickRefineChat({
       const res = await fetch("/api/refine", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          currentPlan,
-          userRequest: text,
-        }),
+        body: JSON.stringify({ currentPlan, userRequest: text }),
       });
 
       const data = await res.json();
@@ -83,7 +74,7 @@ export default function QuickRefineChat({
         role: "assistant",
         content:
           data.answer ||
-          "I have noted your request. To optimize your event, focus on prioritizing high-impact guest touchpoints like signature catering and live music over static printed paper.",
+          "I have noted your request. To optimize your event, focus on prioritizing high-impact touchpoints like signature catering over printed paper.",
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         suggestedPlanUpdate: data.suggestedPlanUpdate,
       };
@@ -95,7 +86,7 @@ export default function QuickRefineChat({
         id: `err-${Date.now()}`,
         role: "assistant",
         content:
-          "• Quick Advice: If trimming costs, replace hard liquor open bar with boutique wines & local craft beers to save up to 18%.\n• To accommodate dietary preferences without extra cost, request farm-fresh grain bowls and seasonal squash risotto from caterers.",
+          "• Quick Advice: Replace open hard liquor bar with boutique wines & local craft beers to save up to 18%.\n• To accommodate dietary preferences, request farm-fresh grain bowls and seasonal squash risotto.",
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages((prev) => [...prev, errorMsg]);
@@ -109,8 +100,7 @@ export default function QuickRefineChat({
       {
         id: "welcome-reset",
         role: "assistant",
-        content:
-          "Chat reset. Ask me anything about guest logistics, budget cutbacks, or theme enhancements!",
+        content: "Chat reset. Ask me anything about guest logistics, budget cutbacks, or theme enhancements!",
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       },
     ]);
@@ -118,7 +108,6 @@ export default function QuickRefineChat({
 
   return (
     <aside aria-label="AI Co-pilot Assistant" className="quick-chat-drawer no-print">
-      {/* Floating Action Trigger Button when closed */}
       {!isOpen && (
         <button
           id="copilot-toggle-btn"
@@ -142,7 +131,6 @@ export default function QuickRefineChat({
         </button>
       )}
 
-      {/* Floating Chat Window / Drawer */}
       {isOpen && (
         <div
           id="copilot-drawer"
@@ -152,71 +140,15 @@ export default function QuickRefineChat({
             isMinimized ? "h-14" : "h-[540px] max-h-[85vh]"
           }`}
         >
-          {/* Drawer Header */}
-          <div className="p-3.5 bg-slate-950/80 border-b border-white/10 flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div
-                aria-hidden="true"
-                className="w-7 h-7 rounded-lg bg-gradient-to-tr from-amber-500 to-fuchsia-600 flex items-center justify-center text-white"
-              >
-                <Zap className="w-4 h-4 fill-white" />
-              </div>
-              <div>
-                <div className="flex items-center space-x-1.5">
-                  <h4 className="text-xs font-bold text-white">
-                    EventCraft Co-Pilot
-                  </h4>
-                  <span className="text-[10px] px-1.5 py-0.2 rounded font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                    3.1 Flash-Lite
-                  </span>
-                </div>
-                <p className="text-[10px] text-slate-400">
-                  Sub-second low latency assistant
-                </p>
-              </div>
-            </div>
+          <ChatDrawerHeader
+            isMinimized={isMinimized}
+            onReset={handleClearHistory}
+            onToggleMinimize={() => setIsMinimized(!isMinimized)}
+            onClose={() => setIsOpen(false)}
+          />
 
-            <div className="flex items-center space-x-1">
-              <button
-                type="button"
-                aria-label="Reset conversation history"
-                tabIndex={0}
-                onClick={handleClearHistory}
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-              >
-                <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
-              </button>
-
-              <button
-                type="button"
-                aria-label={isMinimized ? "Expand co-pilot drawer" : "Minimize co-pilot drawer"}
-                tabIndex={0}
-                onClick={() => setIsMinimized(!isMinimized)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-              >
-                {isMinimized ? (
-                  <Maximize2 className="w-3.5 h-3.5" aria-hidden="true" />
-                ) : (
-                  <Minimize2 className="w-3.5 h-3.5" aria-hidden="true" />
-                )}
-              </button>
-
-              <button
-                type="button"
-                aria-label="Close co-pilot drawer"
-                tabIndex={0}
-                onClick={() => setIsOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-              >
-                <X className="w-4 h-4" aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-
-          {/* Drawer Body (Hidden if Minimized) */}
           {!isMinimized && (
             <>
-              {/* Messages Scroll Area */}
               <div
                 ref={scrollRef}
                 role="log"
@@ -225,59 +157,7 @@ export default function QuickRefineChat({
                 className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-slate-950/40 text-xs"
               >
                 {messages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`flex items-start space-x-2.5 ${
-                      msg.role === "user" ? "flex-row-reverse space-x-reverse" : ""
-                    }`}
-                  >
-                    <div
-                      aria-hidden="true"
-                      className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-white ${
-                        msg.role === "user"
-                          ? "bg-fuchsia-600"
-                          : "bg-gradient-to-tr from-amber-500 to-purple-600"
-                      }`}
-                    >
-                      {msg.role === "user" ? (
-                        <User className="w-3.5 h-3.5" />
-                      ) : (
-                        <Bot className="w-3.5 h-3.5" />
-                      )}
-                    </div>
-
-                    <div
-                      className={`p-3 rounded-2xl max-w-[85%] leading-relaxed ${
-                        msg.role === "user"
-                          ? "bg-fuchsia-600/90 text-white rounded-tr-none shadow-sm"
-                          : "glass-card text-slate-200 rounded-tl-none border border-white/10"
-                      }`}
-                    >
-                      <div className="whitespace-pre-wrap">{msg.content}</div>
-
-                      {/* 1-Click Apply to Plan Button if AI proposes an update */}
-                      {msg.suggestedPlanUpdate && onUpdatePlan && (
-                        <div className="mt-2.5 pt-2 border-t border-white/10">
-                          <button
-                            type="button"
-                            aria-label="Apply AI suggested update to Master Event Plan"
-                            tabIndex={0}
-                            onClick={() => {
-                              onUpdatePlan(msg.suggestedPlanUpdate!);
-                            }}
-                            className="px-2.5 py-1 rounded-md text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 flex items-center space-x-1 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-                          >
-                            <Sparkles className="w-3 h-3 text-amber-400" aria-hidden="true" />
-                            <span>Apply this change to Master Plan</span>
-                          </button>
-                        </div>
-                      )}
-
-                      <span className="text-[9px] text-slate-400 block mt-1 text-right">
-                        {msg.timestamp}
-                      </span>
-                    </div>
-                  </div>
+                  <ChatMessageItem key={msg.id} message={msg} onUpdatePlan={onUpdatePlan} />
                 ))}
 
                 {isLoading && (
@@ -288,57 +168,14 @@ export default function QuickRefineChat({
                 )}
               </div>
 
-              {/* Quick Prompt Pill Carousel */}
-              <div
-                role="group"
-                aria-label="Quick suggestion prompts"
-                className="px-3 py-2 bg-slate-950/60 border-t border-white/5 overflow-x-auto flex space-x-1.5 scrollbar-none"
-              >
-                {QUICK_SUGGESTIONS.map((suggestion) => (
-                  <button
-                    key={suggestion}
-                    type="button"
-                    tabIndex={0}
-                    aria-label={`Ask: ${suggestion}`}
-                    onClick={() => handleSendMessage(suggestion)}
-                    className="shrink-0 text-[11px] px-2.5 py-1 rounded-full bg-slate-900 border border-white/10 hover:border-amber-400/50 hover:text-amber-300 text-slate-300 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-                  >
-                    {suggestion}
-                  </button>
-                ))}
-              </div>
+              <QuickActionPills suggestions={QUICK_SUGGESTIONS} onSelect={handleSendMessage} />
 
-              {/* Input Bar */}
-              <div className="p-3 bg-slate-950/90 border-t border-white/10 flex items-center space-x-2">
-                <label htmlFor="copilot-input" className="sr-only">
-                  Ask AI Co-Pilot a question or request plan modification
-                </label>
-                <input
-                  id="copilot-input"
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSendMessage();
-                    }
-                  }}
-                  placeholder="Ask to adjust guest count, cut budget, etc..."
-                  className="flex-1 glass-input px-3 py-2 rounded-xl text-xs placeholder:text-slate-500 focus:border-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-                />
-                <button
-                  id="copilot-submit-btn"
-                  type="button"
-                  aria-label="Send message to AI co-pilot"
-                  tabIndex={0}
-                  disabled={isLoading || !input.trim()}
-                  onClick={() => handleSendMessage()}
-                  className="p-2 rounded-xl bg-gradient-to-r from-amber-500 to-fuchsia-600 text-white hover:opacity-90 disabled:opacity-40 transition-all shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-                >
-                  <Send className="w-3.5 h-3.5" aria-hidden="true" />
-                </button>
-              </div>
+              <ChatInputBar
+                input={input}
+                isLoading={isLoading}
+                onChange={setInput}
+                onSubmit={() => handleSendMessage()}
+              />
             </>
           )}
         </div>

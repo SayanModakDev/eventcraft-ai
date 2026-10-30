@@ -216,6 +216,45 @@ describe('API Route Integration Tests', () => {
       const data = await blockedResponse.json();
       expect(data.error).toMatch(/Rate limit exceeded/i);
     });
+
+    it('resolves identical requests instantly from in-memory cache with is_cached: true', async () => {
+      const payload = {
+        eventTitle: 'Cache Test Celebration',
+        guestCount: 65,
+        totalBudget: 15000,
+        currency: 'USD',
+      };
+
+      const req1 = new NextRequest('http://localhost:3000/api/plan', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-forwarded-for': '192.168.1.150',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const res1 = await planRoute(req1);
+      expect(res1.status).toBe(200);
+      const data1 = await res1.json();
+      expect(data1.plan.event_title).toBe('Cache Test Celebration');
+
+      // Second identical call with different IP should hit cache
+      const req2 = new NextRequest('http://localhost:3000/api/plan', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-forwarded-for': '192.168.1.151',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const res2 = await planRoute(req2);
+      expect(res2.status).toBe(200);
+      const data2 = await res2.json();
+      expect(data2.is_cached).toBe(true);
+      expect(data2.plan.event_title).toBe('Cache Test Celebration');
+    });
   });
 
   describe('POST /api/refine (Real-Time Co-Pilot Route)', () => {
@@ -308,6 +347,39 @@ describe('API Route Integration Tests', () => {
 
       const data = await response.json();
       expect(data.answer).toMatch(/plant-based|vegetarian|squash|risotto/i);
+    });
+
+    it('resolves duplicate refine requests from in-memory cache', async () => {
+      const refinePayload = {
+        currentPlan: mockPlan,
+        userRequest: 'Suggest signature welcome mocktails',
+      };
+
+      const req1 = new NextRequest('http://localhost:3000/api/refine', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-forwarded-for': '192.168.1.160',
+        },
+        body: JSON.stringify(refinePayload),
+      });
+
+      const res1 = await refineRoute(req1);
+      expect(res1.status).toBe(200);
+
+      const req2 = new NextRequest('http://localhost:3000/api/refine', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-forwarded-for': '192.168.1.161',
+        },
+        body: JSON.stringify(refinePayload),
+      });
+
+      const res2 = await refineRoute(req2);
+      expect(res2.status).toBe(200);
+      const data2 = await res2.json();
+      expect(data2.is_cached).toBe(true);
     });
   });
 

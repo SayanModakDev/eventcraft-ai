@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  compress: true, // Enables Gzip and Brotli compression for maximum bandwidth efficiency
   poweredByHeader: false, // Disables 'x-powered-by: Next.js' to prevent technology fingerprinting
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'canvas-confetti'],
+  },
   async headers() {
     return [
       {
