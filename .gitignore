@@ -1,26 +1,62 @@
 # Dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.js
+.pnp.*
 
-# Next.js build
-/.next/
-/out/
+# Next.js build & production
+.next/
+out/
+build/
+dist/
 
-# Production
-/build
-
-# Misc
-.DS_Store
+# Environment files & Secrets
+.env*
+!.env.example
+*.env
+*.key
 *.pem
+*.cert
+*.crt
+*.pfx
+*.p12
 
-# Local env files
-.env*.local
-.env
+# Logs & debugging
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS & System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+
+# IDE & Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+
+# Build caches & TypeScript
+.turbo/
+.cache/
+*.tsbuildinfo
+next-env.d.ts
 
 # Vercel
 .vercel
 
-# TypeScript
-*.tsbuildinfo
-next-env.d.ts
