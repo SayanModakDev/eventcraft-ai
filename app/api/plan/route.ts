@@ -1,10 +1,51 @@
+/**
+ * API Route Handler: /api/plan
+ * Generates the complete Master Event Blueprint using Gemini 3.8 Flash.
+ *
+ * Enforces Zod input validation, IP rate limiting, and strict JSON schema guarantees.
+ */
+
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { genAI, PRIMARY_HEAVY_MODELS, cleanAndParseJSON } from "@/lib/gemini";
-import { EventPlan, EventIntakeData } from "@/types/event";
+import { EventPlan } from "@/types/event";
 import { DEMO_PRESETS } from "@/lib/presets";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
-export const maxDuration = 60; // 60 seconds max duration for complex blueprint generation
+export const maxDuration = 60; // 60 seconds max execution time for heavy model reasoning
+
+/**
+ * Zod schema defining strict parameter validation for event intake.
+ */
+const IntakeValidationSchema = z.object({
+  eventTitle: z
+    .string()
+    .trim()
+    .min(2, "Event title must be at least 2 characters")
+    .max(150, "Event title cannot exceed 150 characters"),
+  eventType: z
+    .string()
+    .trim()
+    .min(2, "Event category must be at least 2 characters")
+    .max(60)
+    .default("Celebration"),
+  guestCount: z.coerce
+    .number()
+    .int("Guest count must be an integer")
+    .min(1, "Guest count must be at least 1")
+    .max(10000, "Guest count cannot exceed 10,000")
+    .default(50),
+  totalBudget: z.coerce
+    .number()
+    .positive("Total budget must be a positive number")
+    .max(100000000, "Total budget exceeds maximum allowable threshold")
+    .default(10000),
+  currency: z.enum(["INR", "USD", "EUR"]).default("USD"),
+  vibe: z.string().trim().max(400).optional().default("Chic, memorable, elegant"),
+  locationOrVenue: z.string().trim().max(300).optional().default("Curated Celebration Venue"),
+  specialRequirements: z.string().trim().max(1000).optional().default("None"),
+});
 
 const SYSTEM_PROMPT = `
 You are EventCraft AI's Master Blueprint Architect, an elite world-class celebration and event producer.
@@ -20,20 +61,58 @@ RULES:
 7. Return ONLY valid JSON matching the exact schema specified.
 `;
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const intake: EventIntakeData = await req.json();
+    // 1. Abuse Protection & Rate Limiting Check
+    const clientIp = getClientIp(req);
+    const rateCheck = checkRateLimit(`plan_${clientIp}`, 30, 60000);
+
+    if (!rateCheck.success) {
+      const retryAfter = Math.max(1, Math.ceil((rateCheck.reset - Date.now()) / 1000));
+      return NextResponse.json(
+        {
+          error: "Rate limit exceeded. Please wait before generating another blueprint.",
+          retry_after_seconds: retryAfter,
+        },
+        {
+          status: 429,
+          headers: { "Retry-After": String(retryAfter) },
+        }
+      );
+    }
+
+    // 2. Parse and Validate Request Body via Zod
+    let rawBody: unknown;
+    try {
+      rawBody = await req.json();
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid JSON payload in request body" },
+        { status: 400 }
+      );
+    }
+
+    const validation = IntakeValidationSchema.safeParse(rawBody);
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: "Validation failed for event intake parameters",
+          details: validation.error.flatten().fieldErrors,
+        },
+        { status: 400 }
+      );
+    }
 
     const {
-      eventType = "Celebration",
-      eventTitle = "Unforgettable Event",
-      guestCount = 50,
-      totalBudget = 10000,
-      currency = "USD",
-      vibe = "Chic, memorable, elegant",
-      locationOrVenue = "Local Event Venue",
-      specialRequirements = "None",
-    } = intake;
+      eventType,
+      eventTitle,
+      guestCount,
+      totalBudget,
+      currency,
+      vibe,
+      locationOrVenue,
+      specialRequirements,
+    } = validation.data;
 
     const userPrompt = `
 Generate a Master Event Blueprint for the following celebration:
@@ -89,7 +168,7 @@ Strictly produce a JSON response adhering to this JSON structure:
 }
 `;
 
-    // If Gemini client is configured with API Key
+    // 3. Primary AI Model Execution with Fallback Chain
     if (genAI && process.env.GEMINI_API_KEY) {
       let lastError: Error | null = null;
 
@@ -122,22 +201,22 @@ Strictly produce a JSON response adhering to this JSON structure:
             });
           }
         } catch (err) {
-          console.warn(`Model ${modelName} failed, trying next candidate:`, err);
+          console.warn(`Model ${modelName} failed, attempting fallback candidate:`, err);
           lastError = err as Error;
         }
       }
 
-      console.error("All heavy models failed. Falling back gracefully.", lastError);
+      console.error("All heavy models exhausted, serving dynamic calculation engine:", lastError);
     }
 
-    // Graceful smart fallback if API key is not provided or live request encountered limits
-    const matchedPreset = DEMO_PRESETS.find(
-      (p) =>
-        p.data.eventTitle.toLowerCase() === eventTitle.toLowerCase() ||
-        p.data.eventType.toLowerCase() === eventType.toLowerCase()
-    ) || DEMO_PRESETS[0];
+    // 4. Zero-Config Intelligent Fallback Engine
+    const matchedPreset =
+      DEMO_PRESETS.find(
+        (p) =>
+          p.data.eventTitle.toLowerCase() === eventTitle.toLowerCase() ||
+          p.data.eventType.toLowerCase() === eventType.toLowerCase()
+      ) || DEMO_PRESETS[0];
 
-    // Scale budget and guest count to user's input dynamically
     const fallbackPlan: EventPlan = JSON.parse(JSON.stringify(matchedPreset.mockBlueprint));
     fallbackPlan.event_title = eventTitle || fallbackPlan.event_title;
     fallbackPlan.total_budget = totalBudget || fallbackPlan.total_budget;
@@ -157,14 +236,14 @@ Strictly produce a JSON response adhering to this JSON structure:
 
     return NextResponse.json({
       plan: fallbackPlan,
-      model_used: "gemini-3.8-flash (intelligent demo engine)",
+      model_used: "gemini-3.8-flash (intelligent local engine)",
       is_live: false,
       note: !process.env.GEMINI_API_KEY
-        ? "Running in zero-config demo mode. Add GEMINI_API_KEY to .env for live Gemini 3.8 Flash generation."
+        ? "Running in zero-config demo mode. Add GEMINI_API_KEY to .env.local for live Gemini 3.8 Flash generation."
         : "Live API quota limit reached; served dynamic calculated blueprint.",
     });
   } catch (error) {
-    console.error("Plan generation API error:", error);
+    console.error("Plan generation API unexpected error:", error);
     return NextResponse.json(
       {
         error: "Failed to generate event blueprint",

@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import {
-  CalendarClock,
   CheckCircle,
   Circle,
   Flag,
@@ -61,21 +60,21 @@ export default function TimelineChecklist({
     switch (priority) {
       case "High":
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20">
-            <AlertTriangle className="w-2.5 h-2.5 mr-1" />
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/10 text-rose-300 border border-rose-500/30">
+            <AlertTriangle className="w-2.5 h-2.5 mr-1" aria-hidden="true" />
             High Priority
           </span>
         );
       case "Medium":
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
-            <Flag className="w-2.5 h-2.5 mr-1" />
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/30">
+            <Flag className="w-2.5 h-2.5 mr-1" aria-hidden="true" />
             Medium
           </span>
         );
       case "Low":
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20">
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-500/10 text-slate-300 border border-slate-500/30">
             Low
           </span>
         );
@@ -83,17 +82,17 @@ export default function TimelineChecklist({
   };
 
   return (
-    <div className="space-y-6">
+    <section aria-label="Sequential Milestones Checklist" className="space-y-6">
       {/* Progress Header */}
       <div className="glass-panel rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center space-x-2">
-            <ListChecks className="w-5 h-5 text-fuchsia-400" />
+            <ListChecks className="w-5 h-5 text-fuchsia-400" aria-hidden="true" />
             <h3 className="text-base font-bold text-white">
               Event Execution Readiness
             </h3>
           </div>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-300 mt-0.5">
             Interactive milestone tracker &bull; Click any task to mark completed
           </p>
         </div>
@@ -108,7 +107,14 @@ export default function TimelineChecklist({
             </span>
           </div>
 
-          <div className="w-24 h-2.5 bg-slate-900 rounded-full overflow-hidden border border-white/10">
+          <div
+            role="progressbar"
+            aria-label="Execution readiness progress"
+            aria-valuenow={progressPercent}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            className="w-24 h-2.5 bg-slate-900 rounded-full overflow-hidden border border-white/10"
+          >
             <div
               style={{ width: `${progressPercent}%` }}
               className="h-full bg-gradient-to-r from-fuchsia-500 to-emerald-400 transition-all duration-300"
@@ -125,14 +131,14 @@ export default function TimelineChecklist({
           const isPhaseComplete = phaseTasks.length > 0 && phaseDone === phaseTasks.length;
 
           return (
-            <div
+            <article
               key={phaseGroup.phase || phaseIdx}
               className="glass-panel rounded-2xl overflow-hidden border border-white/5"
             >
               {/* Phase Header */}
               <div className="px-5 py-3.5 bg-slate-950/60 border-b border-white/5 flex items-center justify-between">
                 <div className="flex items-center space-x-2.5">
-                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-fuchsia-600/20 text-fuchsia-400 font-bold text-xs border border-fuchsia-500/30">
+                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-fuchsia-600/20 text-fuchsia-300 font-bold text-xs border border-fuchsia-500/30">
                     {phaseIdx + 1}
                   </div>
                   <div>
@@ -147,13 +153,13 @@ export default function TimelineChecklist({
                   </div>
                 </div>
 
-                <div className="text-xs text-slate-400 font-medium">
+                <div className="text-xs text-slate-300 font-medium">
                   {phaseDone} / {phaseTasks.length} Done
                 </div>
               </div>
 
               {/* Task Items */}
-              <div className="p-4 space-y-2.5 divide-y divide-white/5">
+              <div className="p-4 space-y-2.5 divide-y divide-white/5" role="list">
                 {phaseTasks.map((task, taskIdx) => {
                   const key = `${phaseIdx}-${taskIdx}`;
                   const isDone = !!completedTasks[key];
@@ -161,31 +167,36 @@ export default function TimelineChecklist({
                   return (
                     <div
                       key={task.task_name || taskIdx}
+                      role="checkbox"
+                      aria-checked={isDone}
+                      tabIndex={0}
                       onClick={() => handleToggle(phaseIdx, taskIdx)}
-                      className={`pt-2.5 first:pt-0 flex items-start space-x-3.5 p-2 rounded-xl cursor-pointer transition-all ${
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          handleToggle(phaseIdx, taskIdx);
+                        }
+                      }}
+                      className={`pt-2.5 first:pt-0 flex items-start space-x-3.5 p-2 rounded-xl cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 ${
                         isDone
-                          ? "bg-emerald-950/20 opacity-70"
+                          ? "bg-emerald-950/20 opacity-80"
                           : "hover:bg-slate-900/60"
                       }`}
                     >
-                      <button
-                        type="button"
-                        className="mt-0.5 shrink-0 text-slate-400 hover:text-emerald-400 transition-colors"
-                        aria-label="Toggle task"
-                      >
+                      <div className="mt-0.5 shrink-0 text-slate-400">
                         {isDone ? (
-                          <CheckCircle className="w-5 h-5 text-emerald-400 fill-emerald-950" />
+                          <CheckCircle className="w-5 h-5 text-emerald-400 fill-emerald-950" aria-hidden="true" />
                         ) : (
-                          <Circle className="w-5 h-5 text-slate-500" />
+                          <Circle className="w-5 h-5 text-slate-400" aria-hidden="true" />
                         )}
-                      </button>
+                      </div>
 
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center justify-between gap-2">
                           <span
                             className={`text-sm font-semibold transition-all ${
                               isDone
-                                ? "line-through text-slate-500"
+                                ? "line-through text-slate-400"
                                 : "text-slate-100"
                             }`}
                           >
@@ -195,7 +206,7 @@ export default function TimelineChecklist({
                         </div>
                         <p
                           className={`text-xs mt-1 leading-relaxed ${
-                            isDone ? "text-slate-600" : "text-slate-400"
+                            isDone ? "text-slate-400" : "text-slate-300"
                           }`}
                         >
                           {task.description}
@@ -205,10 +216,10 @@ export default function TimelineChecklist({
                   );
                 })}
               </div>
-            </div>
+            </article>
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }

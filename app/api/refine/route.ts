@@ -1,22 +1,75 @@
+/**
+ * API Route Handler: /api/refine
+ * Provides sub-second conversational refinement using Gemini 3.1 Flash-Lite.
+ *
+ * Enforces Zod input validation, IP rate limiting, and structured plan modification extraction.
+ */
+
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { genAI, LIGHTWEIGHT_COPILOT_MODELS } from "@/lib/gemini";
-import { RefineRequest, EventPlan } from "@/types/event";
+import { EventPlan } from "@/types/event";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
+
+const RefineValidationSchema = z.object({
+  userRequest: z
+    .string()
+    .trim()
+    .min(1, "userRequest cannot be empty")
+    .max(800, "userRequest exceeds maximum length of 800 characters"),
+  currentPlan: z.custom<EventPlan>().optional(),
+});
 
 const SYSTEM_PROMPT = `You are the EventCraft quick assistant, a real-time AI co-pilot powered by Gemini Flash Lite.
 Your role: Provide immediate, focused modifications or answers regarding the event plan in 2-3 sentences or concise bullet points.
 Be crisp, highly practical, and actionable. Avoid fluff.
 If the user's request involves modifying numbers, cutting budget, shifting dates, or tweaking decor, give concrete advice.`;
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const body: RefineRequest = await req.json();
-    const { currentPlan, userRequest } = body;
+    // 1. Abuse Protection & Rate Limiting Check
+    const clientIp = getClientIp(req);
+    const rateCheck = checkRateLimit(`refine_${clientIp}`, 60, 60000);
 
-    if (!userRequest || !userRequest.trim()) {
-      return NextResponse.json({ error: "userRequest is required" }, { status: 400 });
+    if (!rateCheck.success) {
+      const retryAfter = Math.max(1, Math.ceil((rateCheck.reset - Date.now()) / 1000));
+      return NextResponse.json(
+        {
+          error: "Rate limit exceeded. Please wait a moment before sending another message.",
+          retry_after_seconds: retryAfter,
+        },
+        {
+          status: 429,
+          headers: { "Retry-After": String(retryAfter) },
+        }
+      );
     }
+
+    // 2. Parse and Validate Request Body via Zod
+    let rawBody: unknown;
+    try {
+      rawBody = await req.json();
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid JSON payload in request body" },
+        { status: 400 }
+      );
+    }
+
+    const validation = RefineValidationSchema.safeParse(rawBody);
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: "userRequest is required and must be non-empty",
+          details: validation.error.flatten().fieldErrors,
+        },
+        { status: 400 }
+      );
+    }
+
+    const { userRequest, currentPlan } = validation.data;
 
     const planSummary = currentPlan
       ? `Current Event: "${currentPlan.event_title}", Budget: ${currentPlan.total_budget} ${currentPlan.currency}, Guests: ${currentPlan.guest_count || 100}, Theme: "${currentPlan.theme_tagline}"`
@@ -53,7 +106,7 @@ Answer directly according to your instructions.`;
       }
     }
 
-    // If Gemini client is available
+    // 3. Primary AI Model Execution with Fallback Chain
     if (genAI && process.env.GEMINI_API_KEY) {
       for (const modelName of LIGHTWEIGHT_COPILOT_MODELS) {
         try {
@@ -76,12 +129,12 @@ Answer directly according to your instructions.`;
             suggestedPlanUpdate,
           });
         } catch (err) {
-          console.warn(`Lite model ${modelName} failed, trying next:`, err);
+          console.warn(`Lite model ${modelName} failed, attempting next candidate:`, err);
         }
       }
     }
 
-    // Smart heuristic co-pilot fallback when offline or no API key set
+    // 4. Smart Heuristic Local Fallback Engine
     let fallbackAnswer = "";
 
     if (reqLower.includes("guest") || reqLower.includes("fewer") || reqLower.includes("more")) {
@@ -103,7 +156,7 @@ Answer directly according to your instructions.`;
       suggestedPlanUpdate,
     });
   } catch (error) {
-    console.error("Refine API error:", error);
+    console.error("Refine API unexpected error:", error);
     return NextResponse.json(
       { error: "Failed to process refinement request", details: (error as Error).message },
       { status: 500 }

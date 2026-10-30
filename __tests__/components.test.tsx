@@ -23,9 +23,9 @@ describe('UI Component Render & Interaction Tests', () => {
       );
 
       // Verify One-Click Demo Presets rendered
-      expect(screen.getByText(/Rustic Wedding/i)).toBeInTheDocument();
-      expect(screen.getByText(/Neon 21st Birthday/i)).toBeInTheDocument();
-      expect(screen.getByText(/Tech Hackathon Gala/i)).toBeInTheDocument();
+      expect(screen.getByText(/Rustic Meadow Wedding/i)).toBeInTheDocument();
+      expect(screen.getByText(/Neon Cyberpunk 21st Birthday/i)).toBeInTheDocument();
+      expect(screen.getByText(/Global Tech Hackathon Finale Gala/i)).toBeInTheDocument();
 
       // Verify Currency toggles
       expect(screen.getByText(/₹ INR/i)).toBeInTheDocument();
@@ -56,7 +56,7 @@ describe('UI Component Render & Interaction Tests', () => {
         />
       );
 
-      const neonPresetBtn = screen.getByText(/Neon 21st Birthday/i).closest('button');
+      const neonPresetBtn = screen.getByText(/Neon Cyberpunk 21st Birthday/i).closest('button');
       expect(neonPresetBtn).not.toBeNull();
       fireEvent.click(neonPresetBtn!);
 

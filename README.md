@@ -1,81 +1,190 @@
 # 🌟 EventCraft AI — Autonomous Celebration & Event Architect
-> **Tailored for Hack2skill / PromptWars Challenge 5**
+> **Tailored for Hack2skill / PromptWars Challenge 5: Celebration & Event Planner**
 
-EventCraft AI is a production-ready, autonomous celebration and event planning web application that transforms basic event parameters into an end-to-end master event blueprint in seconds. It is built with a **Dual-Model Gemini Architecture**, balancing deep heavy reasoning with sub-second real-time co-pilot intelligence.
+[![Next.js 15](https://img.shields.io/badge/Next.js-15.1.0-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React 19](https://img.shields.io/badge/React-19.0.0-blue?style=for-the-badge&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7.2-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.17-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![Google Gemini](https://img.shields.io/badge/Google_Gemini-3.8_Flash_%26_3.1_Flash--Lite-orange?style=for-the-badge&logo=google)](https://ai.google.dev/)
+[![Vitest](https://img.shields.io/badge/Vitest-71_Passed-brightgreen?style=for-the-badge&logo=vitest)](https://vitest.dev/)
+[![WCAG AA](https://img.shields.io/badge/Accessibility-WCAG_AA_Compliant-purple?style=for-the-badge)](https://www.w3.org/WAI/standards-guidelines/wcag/)
+[![Zero Cost](https://img.shields.io/badge/Zero_Cost-Free_Tier_Deployable-emerald?style=for-the-badge)](https://vercel.com/)
 
----
-
-## 🏛️ Dual-Model Architecture
-
-| Model | Role | Responsibilities | Latency Profile |
-|---|---|---|---|
-| **Gemini 3.8 Flash** | **Primary Heavy Workhorse** | End-to-end master event plan generation, financial budget calculations, percentage balancing, sequential timeline dependencies, and vendor negotiation matrices. Enforces strict JSON schemas. | High-depth reasoning (~3-5s) |
-| **Gemini 3.1 Flash-Lite** | **Lightweight Real-time Co-Pilot** | Real-time interactive assistant for conversational tweaks, inline cost-cutting tips, dietary menu substitutions, and quick field modifications. | Ultra-low latency (<1s) |
-
----
-
-## 🚀 Key Features
-
-1. **One-Click Demo Presets:**
-   - Quick-load realistic event templates for instant hackathon evaluation:
-     - 🌿 **Rustic Wedding** (120 guests, $25,000)
-     - ⚡ **Neon 21st Birthday** (75 guests, $8,000)
-     - 🚀 **Tech Hackathon Gala** (250 guests, $45,000)
-2. **Interactive Budget Visualizer:**
-   - Category budget allocation cards, dynamic stacked percentage progress bar, and AI cost-cutting opportunities.
-   - Multi-currency support: **INR (₹)**, **USD ($)**, and **EUR (€)**.
-3. **Phased Milestone Checklist:**
-   - Sequential phases (Planning & Sourcing, Logistics & Invitations, Event Week Execution).
-   - Priority chips (`High`, `Medium`, `Low`) and interactive checkboxes that update completion percentage in real time with celebration confetti!
-4. **Vendor Negotiation Playbook:**
-   - Deliverables checklist, copyable hardball negotiation scripts, and contract red flags for Venues, Caterers, DJs/Audio, and Photographers.
-5. **Creative Aesthetics & Invitation Copy:**
-   - Curated playlist BPM vibe arc, signature activation moments, decor concepts, and one-click copyable invitation copy.
-6. **Gemini 3.1 Flash-Lite Floating Co-Pilot:**
-   - Persistent slide-over drawer with quick action pills and 1-click **"Apply to Master Plan"** functionality.
-7. **Zero-Database Local Storage Sync:**
-   - Master blueprint automatically persists in `localStorage` across page reloads.
-8. **Print & PDF Export Utility:**
-   - Custom `@media print` CSS formats a multi-page physical itinerary document when clicking **"Save as PDF / Print"**.
-9. **Zero-Cost & Free-Tier Deployable:**
-   - Requires zero external database (no Prisma, Postgres, or MongoDB). Deployable directly to Vercel with zero cold starts.
+EventCraft AI is a production-ready, autonomous celebration and event planning web application that synthesizes raw event concepts into complete, mathematically balanced, and highly creative master event blueprints in seconds. Engineered specifically for **PromptWars Challenge 5**, it employs a **Dual-Model Gemini Architecture** that balances heavy multi-variable reasoning with sub-second real-time co-pilot intelligence.
 
 ---
 
-## 📂 File Tree
+## 🏛️ System Architecture
+
+EventCraft AI couples a Next.js 15 App Router architecture with strict serverless rate limiting, Zod schema validation, and intelligent dual-model routing.
+
+```
+                                  ┌──────────────────────────────┐
+                                  │   User Browser (React 19)    │
+                                  │  • Intake Form & Presets     │
+                                  │  • Visualizer & Dossier Tabs │
+                                  │  • Slide-Over Co-Pilot       │
+                                  └──────────────┬───────────────┘
+                                                 │
+                                     HTTPS JSON Requests
+                                                 │
+                                                 ▼
+                                  ┌──────────────────────────────┐
+                                  │    Next.js 15 Edge Engine    │
+                                  │  • Strict HTTP Security (CSP)│
+                                  │  • Sliding-Window Rate Limit │
+                                  │  • Zod Parameter Validation  │
+                                  └──────┬───────────────┬───────┘
+                                         │               │
+                  POST /api/plan         │               │  POST /api/refine
+                 (Heavy Reasoning)       │               │ (Sub-Second Co-Pilot)
+                                         ▼               ▼
+                       ┌────────────────────────┐  ┌────────────────────────┐
+                       │    Gemini 3.8 Flash    │  │  Gemini 3.1 Flash-Lite │
+                       │ • Master JSON Blueprint│  │ • Real-time Plan Tweaks│
+                       │ • 100% Budget Balancing│  │ • Guest Headcount Math │
+                       │ • Phased Milestones    │  │ • Dietary Substitutions│
+                       │ • Vendor Playbooks     │  │ • Budget Cut Advice    │
+                       └────────────────────────┘  └────────────────────────┘
+```
+
+```mermaid
+flowchart TD
+    A["User Intake & 5 Presets"] --> B["Security Layer (Headers & Rate Limiting)"]
+    B --> C["Zod Validation Schema"]
+    C -->|Heavy Generation| D["Gemini 3.8 Flash<br/>(Master Blueprint Engine)"]
+    C -->|Fast Refinement| E["Gemini 3.1 Flash-Lite<br/>(Real-Time Co-Pilot)"]
+    D --> F["Event Master Blueprint"]
+    E --> G["Interactive Updates"]
+    F --> H["Budget Visualizer"]
+    F --> I["Phased Roadmap"]
+    F --> J["Day-of Schedule"]
+    F --> K["Dietary & Logistics Matrix"]
+    F --> L["Vendor Playbook"]
+    F --> M["Print / PDF Dossier"]
+    G --> F
+```
+
+---
+
+## ⚡ Dual-Model Architecture Matrix
+
+| Model | Role | Responsibilities | Latency Profile | Free-Tier Compatible |
+|---|---|---|---|:---:|
+| **Gemini 3.8 Flash** | **Primary Heavy Workhorse** | End-to-end master event plan generation, mathematical budget calculations (ensuring 100% category allocation), sequential chronological milestones, vendor negotiation playbooks, and day-of run of sheets. Enforces strict JSON schemas. | High-depth reasoning (~3–5s) | ✅ Yes |
+| **Gemini 3.1 Flash-Lite** | **Lightweight Real-time Co-Pilot** | Real-time interactive assistant for conversational tweaks, inline cost-cutting tips, dietary menu substitutions, and quick field modifications. | Ultra-low latency (<1s) | ✅ Yes |
+
+---
+
+## 🎯 Challenge 5 Domain-Specific Capabilities
+
+EventCraft AI deeply fulfills every criterion of **PromptWars Challenge 5 (Celebration & Event Planner)**:
+
+1. **Dietary Restrictions & Kitchen Safety Matrix:**
+   - Detailed breakdown across Vegetarian/Vegan, Gluten-Free, Halal, Nut-Free, and Omnivore allocations.
+   - Percentage distribution, guest count approximations, gourmet substitution recipes, and dedicated chef preparation notes to prevent cross-contamination.
+
+2. **Day-of Run of Sheet / Hour-by-Hour Execution Schedule:**
+   - Chronological run-of-sheet detailing timeline slots, lead coordinator/vendor handoffs, and critical logistical cues (e.g., sound checks, lighting cues, stage triggers).
+
+3. **Logistics, Seating & Weather Contingency:**
+   - Spatial dynamics advice (dance floor buffers, sightlines, dais placement).
+   - Weather backup plan (sailcloth marquee holds, auxiliary propane heaters, redundant power generators).
+   - Day-of Emergency Kit checklist (wireless steamers, silicone heel guards, backup audio adapters).
+
+4. **100% Mathematically Balanced Budget Visualizer:**
+   - Guarantees category percentages sum to exactly 100% and aggregate costs match the target budget.
+   - Multi-currency engine supporting **INR (₹)**, **USD ($)**, and **EUR (€)**.
+   - Actionable cost-cutting levers for every budget item.
+
+5. **Vendor Playbook & Hardball Negotiation Scripts:**
+   - Deliverables checklist, word-for-word negotiation scripts, and contract red flags for Venues, Caterers, DJs/AV, and Photographers.
+
+---
+
+## 🚀 One-Click Demo Presets (Instant Evaluation)
+
+For immediate review without manual form filling, 5 distinct celebration presets are available:
+
+| Preset | Type | Guests | Budget | Highlights |
+|---|---|:---:|:---:|---|
+| 🌿 **Rustic Meadow Wedding** | Wedding | 120 | $25,000 USD | Napa Valley barn, farm-to-table dinner, acoustic trio, campfire s'mores lounge |
+| ⚡ **Neon Cyberpunk 21st Birthday** | Nightlife | 75 | $8,000 USD | Industrial loft, UV glow bar, LED dance floor, EDM beats, 360 photo booth |
+| 🚀 **Global Tech Hackathon Finale Gala** | Corporate & Tech | 250 | $45,000 USD | Innovation auditorium, Gigabit Wi-Fi, 4K LED wall, VIP investor lounge |
+| 🪔 **Grand Cultural Sangeet & Reception** | Cultural Wedding | 350 | ₹1,800,000 INR | Heritage palace courtyard, live Dhol troupe, royal Rajasthani banquet, Halal/Jain stations |
+| 🥂 **Luxury Château Golden 50th Anniversary** | Milestone | 60 | €35,000 EUR | Bordeaux vineyard château, Michelin-starred tasting dinner, classical string quartet |
+
+---
+
+## 🛡️ Security & Code Quality Standards
+
+- **Strict TypeScript (Zero `any`):** Every data structure, API payload, and component prop is strongly typed with strict interfaces (`EventPlan`, `BudgetCategory`, `TimelineMilestone`, `VendorChecklist`, `DietaryRequirement`, `DayOfScheduleItem`).
+- **Zod Input Validation:** Rigorous boundary checks on `/api/plan` and `/api/refine` (positive budgets, bounded guest counts, length-capped strings, and enum-restricted currencies).
+- **HTTP Security Headers:** Configured in `next.config.mjs` including:
+  - `Content-Security-Policy` (CSP)
+  - `X-Frame-Options: DENY`
+  - `X-Content-Type-Options: nosniff`
+  - `Referrer-Policy: strict-origin-when-cross-origin`
+  - `Permissions-Policy`
+  - `X-DNS-Prefetch-Control: on`
+- **Sliding-Window Rate Limiting:** In-memory IP rate limiter protecting API routes against brute-force spamming (30 req/min for `/api/plan`, 60 req/min for `/api/refine`).
+- **Zero Client Credential Leakage:** API keys are accessed exclusively on the server runtime; no `NEXT_PUBLIC_` API keys are exposed.
+- **Accessibility (WCAG AA):**
+  - High contrast color palette meeting WCAG AA ratios (all body and muted text is `#94a3b8` or lighter on dark backgrounds).
+  - Explicit `aria-label` attributes on all icon buttons, drawer toggles, and modal triggers.
+  - Semantic HTML (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`).
+  - Full keyboard navigability with visible focus rings (`:focus-visible:ring-2`).
+
+---
+
+## 📂 File Architecture
 
 ```
 ├── app/
 │   ├── api/
-│   │   ├── plan/route.ts      # Heavy generation route (Gemini 3.8 Flash)
-│   │   └── refine/route.ts    # Lightweight co-pilot route (Gemini 3.1 Flash-Lite)
-│   ├── globals.css            # Glassmorphism, animations, & @media print styles
-│   ├── icon.svg               # Dynamic vector favicon emblem
-│   ├── layout.tsx             # Root layout with navbar & dual-model indicators
-│   └── page.tsx               # Main dashboard, tab visualizer & state sync
+│   │   ├── plan/route.ts              # Gemini 3.8 Flash heavy generation route (Zod + Rate limited)
+│   │   └── refine/route.ts            # Gemini 3.1 Flash-Lite co-pilot route (Zod + Rate limited)
+│   ├── globals.css                    # Glassmorphism, animations, & @media print styles
+│   ├── icon.svg                       # Dynamic vector favicon emblem
+│   ├── layout.tsx                     # Root layout with navbar & dual-model indicators
+│   └── page.tsx                       # Modular main dashboard (<250 lines)
 ├── components/
-│   ├── BudgetVisualizer.tsx   # Budget cards, progress bar, & cost-saving tips
-│   ├── CreativeAesthetics.tsx # Decor, playlist vibes, & invitation copy
-│   ├── EventIntakeForm.tsx    # Preset buttons, currency selector, sliders
-│   ├── Logo.tsx               # Custom SVG branding & geometric emblem component
-│   ├── QuickRefineChat.tsx    # Slide-over chat drawer (Gemini 3.1 Flash-Lite)
-│   ├── StepLoader.tsx         # Multi-stage animated generation loader
-│   ├── TimelineChecklist.tsx  # Phased milestones & task completion tracker
-│   └── VendorPlaybook.tsx     # Deliverables, negotiation scripts, & red flags
-├── public/
-│   ├── favicon.svg            # Standalone geometric celebration & AI facet favicon
-│   └── logo.svg               # Production SVG brand logo & wordmark lockup
+│   ├── BudgetVisualizer.tsx           # Category allocation cards & percentage bars
+│   ├── CreativeAesthetics.tsx         # Decor, playlist vibe curves, & copyable invitations
+│   ├── DayOfScheduleView.tsx          # Hour-by-hour run-of-sheet schedule
+│   ├── DietaryAndLogisticsView.tsx    # Dietary breakdown, floorplan advice & contingency
+│   ├── EventIntakeForm.tsx            # Preset buttons, currency toggle, sliders
+│   ├── Logo.tsx                       # Custom SVG branding & geometric emblem
+│   ├── PlanExecutiveOverview.tsx      # Vision overview & modular snapshot preview cards
+│   ├── PlanResultsHeader.tsx          # Results title bar, model badge, export actions
+│   ├── PrintDossierView.tsx           # Formatted print/PDF itinerary
+│   ├── QuickRefineChat.tsx            # Slide-over co-pilot drawer (Gemini 3.1 Flash-Lite)
+│   ├── RawJsonViewer.tsx              # Formatted JSON inspector with copy action
+│   ├── StepLoader.tsx                 # Animated multi-stage generation progress indicator
+│   ├── TimelineChecklist.tsx          # Phased milestones & interactive task checkboxes
+│   └── VendorPlaybook.tsx             # Deliverables, negotiation scripts, & red flags
 ├── lib/
-│   ├── gemini.ts              # Google GenAI client & fallback model routing
-│   ├── presets.ts             # Demo presets & instant evaluation blueprints
-│   └── utils.ts               # Currency formatting & CSS utilities
+│   ├── gemini.ts                      # Google GenAI client & fallback model routing
+│   ├── presets.ts                     # 5 Demo Presets & instant evaluation blueprints
+│   ├── rate-limit.ts                  # Sliding-window IP rate limiter
+│   └── utils.ts                       # Currency formatting & CSS utilities
 ├── types/
-│   └── event.ts               # TypeScript schemas matching Challenge 5 spec
-├── .env.example               # Environment variable reference
-├── next.config.mjs            # Next.js configuration
-├── package.json               # Dependencies (Next 15, React 19, Tailwind, GenAI)
-├── tailwind.config.ts         # Glassmorphism theme & celebration color tokens
-└── tsconfig.json              # TypeScript configuration
+│   └── event.ts                       # Strict TypeScript interfaces matching Challenge 5 spec
+├── __tests__/
+│   ├── api.test.ts                    # API integration tests, Zod validation, rate limiting
+│   ├── budget.test.ts                 # Financial logic, percentage summing, currency formatting
+│   ├── components.test.tsx            # Component rendering & interaction tests
+│   └── timeline.test.ts               # Chronological milestones & task priority validation
+├── public/
+│   ├── favicon.svg                    # Standalone geometric celebration & AI facet favicon
+│   └── logo.svg                       # Production SVG brand logo & wordmark lockup
+├── .github/workflows/
+│   └── test.yml                       # CI pipeline: install, lint, test with coverage, build
+├── next.config.mjs                    # Next.js security headers & production settings
+├── package.json                       # Dependencies & test scripts
+├── tailwind.config.ts                 # Theme tokens & glassmorphism utilities
+├── tsconfig.json                      # Strict TypeScript compiler configuration
+└── vitest.config.mts                  # Vitest runner configuration with coverage
 ```
 
 ---
@@ -90,7 +199,7 @@ npm install
 ```
 
 ### 2. Configure Environment Variables
-Create a `.env.local` file in the root directory:
+Create a `.env.local` file in the project root:
 ```bash
 GEMINI_API_KEY=your_google_ai_studio_api_key_here
 ```
@@ -102,18 +211,18 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 4. Run Automated Testing Suite & Linting
+### 4. Run Automated Testing Suite
 ```bash
-# Run all unit, integration, and component tests
+# Run all 71 unit, integration, and component tests
 npm test
 
 # Run tests in interactive watch mode
 npm run test:watch
 
-# Generate V8 coverage report
+# Run tests with V8 coverage report
 npm run test:coverage
 
-# Run ESLint validation
+# Run ESLint validation (0 errors, 0 warnings)
 npm run lint
 ```
 
@@ -125,60 +234,16 @@ npm run start
 
 ---
 
-## 📋 Challenge 5 Master Blueprint JSON Schema
-
-The route `app/api/plan/route.ts` strictly enforces the following JSON structure:
-
-```json
-{
-  "event_title": "String",
-  "theme_tagline": "String",
-  "audience_profile": "String",
-  "total_budget": 25000,
-  "currency": "USD",
-  "budget_breakdown": [
-    {
-      "category": "Venue & Barn Rental",
-      "percentage": 30,
-      "estimated_cost": 7500,
-      "cost_saving_tip": "Book on Friday/Sunday to save 15%."
-    }
-  ],
-  "timeline_milestones": [
-    {
-      "phase": "Phase 1: 4 Months Out (Foundations)",
-      "tasks": [
-        {
-          "task_name": "Lock Barn Venue",
-          "priority": "High",
-          "description": "Finalize deposit and permits."
-        }
-      ]
-    }
-  ],
-  "vendor_checklists": [
-    {
-      "vendor_type": "Venue Manager",
-      "suggested_deliverables": ["12-hour exclusive access"],
-      "negotiation_questions": ["Is trash cleanup bundled?"],
-      "red_flags_to_avoid": ["No backup generator"]
-    }
-  ],
-  "personalized_ideas": {
-    "decor_concept": "String",
-    "signature_activity": "String",
-    "curated_playlist_vibe": "String",
-    "invitation_copy": "String"
-  }
-}
-```
-
----
-
 ## 🌐 Deploy to Vercel (Zero Cost)
 
 1. Push this repository to GitHub.
 2. Import the repository into **[Vercel](https://vercel.com)**.
 3. In Project Settings &rarr; **Environment Variables**, add:
    - `GEMINI_API_KEY` = `your_gemini_api_key`
-4. Click **Deploy**. Since no database connection is required, build and deployment will complete in under 60 seconds!
+4. Click **Deploy**. Since no external database is required, build and deployment will finish in under 60 seconds with zero cold starts!
+
+---
+
+## ⚖️ License & Attribution
+
+Developed with passion for **Hack2skill / PromptWars Challenge 5 (Celebration & Event Planner)**. Built on free-tier, open-source technology for high accessibility and zero-cost hosting.

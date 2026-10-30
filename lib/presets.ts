@@ -13,7 +13,7 @@ export interface DemoPreset {
 export const DEMO_PRESETS: DemoPreset[] = [
   {
     id: "rustic-wedding",
-    name: "Rustic Wedding",
+    name: "Rustic Meadow Wedding",
     emoji: "🌿",
     tagline: "Earthy vineyard romantic charm with twinkling fairy lights and acoustic melodies",
     badge: "Most Popular",
@@ -194,12 +194,80 @@ export const DEMO_PRESETS: DemoPreset[] = [
         signature_activity: "Handmade S'mores & Bourbon Tasting Lounge: A cozy fire pit area where guests roast gourmet marshmallows with smoked vanilla bean wafers alongside a barrel-aged bourbon tasting station.",
         curated_playlist_vibe: "Warm indie-folk and soulful acoustic grooves featuring Leon Bridges, Vance Joy, Norah Jones, and Ray LaMontagne, building into upbeat vintage Motown dance grooves.",
         invitation_copy: "Under open skies and whispering pines, we invite you to celebrate love, laughter, and lifelong friendship. Join us for an evening of harvest tables, acoustic melodies, and dancing under the stars."
+      },
+      dietary_breakdown: [
+        {
+          category: "Vegetarian & Vegan",
+          estimated_percentage: 22,
+          recommended_substitutions: "Wild forest mushroom and black truffle risotto with crispy sage; roasted rainbow carrots with tahini glaze.",
+          chef_note: "Prepared in a dedicated prep station to avoid cross-contact with animal fats."
+        },
+        {
+          category: "Gluten-Free",
+          estimated_percentage: 15,
+          recommended_substitutions: "Polenta cakes with rosemary ratatouille; flourless dark chocolate torte with raspberry coulis.",
+          chef_note: "All sauces thickened with cornstarch or arrowroot rather than wheat flour."
+        },
+        {
+          category: "Standard Artisanal Omnivore",
+          estimated_percentage: 63,
+          recommended_substitutions: "Pan-seared local rainbow trout with lemon herb butter; dry-aged braised short rib.",
+          chef_note: "Farm-to-table pasture-raised proteins sourced within a 50-mile radius."
+        }
+      ],
+      day_of_schedule: [
+        {
+          time: "15:00 - 15:45",
+          activity: "Guest Arrival & Sparkling Elderflower Welcome Spritz",
+          lead_coordinator_or_vendor: "Venue Greeters & Acoustic Guitarist",
+          logistical_cue: "Cue soft acoustic ambient melodies as shuttles drop guests at the orchard gate."
+        },
+        {
+          time: "16:00 - 16:45",
+          activity: "Orchard Meadow Ceremony",
+          lead_coordinator_or_vendor: "Wedding Officiant & Audio Tech",
+          logistical_cue: "Soundcheck wireless lapel mic; ensure generator buffer for live amplification."
+        },
+        {
+          time: "17:00 - 18:15",
+          activity: "Golden Hour Cocktail Hour & Charcuterie Harvest Table",
+          lead_coordinator_or_vendor: "Catering Captain & Bar Team",
+          logistical_cue: "Passed heirloom crostini; photographer whisks couple away for 30-min sunset portraits."
+        },
+        {
+          time: "18:30 - 20:15",
+          activity: "Plated Barn Dinner & Heartfelt Toasts",
+          lead_coordinator_or_vendor: "Lead Coordinator & Banquet Staff",
+          logistical_cue: "Dim barn festoon lighting by 20%; light tabletop beeswax taper candles."
+        },
+        {
+          time: "20:30 - 22:30",
+          activity: "Live Band Dance Party & Bourbon S'mores Lounge Activation",
+          lead_coordinator_or_vendor: "Ensemble Band & Fire Pit Attendant",
+          logistical_cue: "Ignite fire pits outside barn perimeter; distribute gourmet marshmallow roasting skewers."
+        },
+        {
+          time: "22:45 - 23:00",
+          activity: "Sparkler Exit & Shuttles Departure",
+          lead_coordinator_or_vendor: "Coordinator & Transportation Fleet",
+          logistical_cue: "Distribute 20-inch smokeless wedding sparklers; line the pathway to departure coaches."
+        }
+      ],
+      logistics_contingency: {
+        seating_and_floorplan_advice: "Staggered 8-foot rectangular wooden harvest tables in a U-formation framing a central 18x18ft reclaimed wood dance floor, allowing unblocked views of the head table from all angles.",
+        weather_contingency_plan: "High-peak sailcloth tent with clear side walls reserved on 48-hour tentative hold; two commercial propane patio blowers staged adjacent to the barn doors in case of unexpected drop in evening temperature.",
+        emergency_kit_essentials: [
+          "Compact wireless clothing steamer and fabric lint rollers",
+          "Translucent silicone heel protectors for lawn walking",
+          "Hypoallergenic bug repellent spritz and organic sunscreen bottles",
+          "Mini floral repair kit with green florist wire and floral shears"
+        ]
       }
     }
   },
   {
     id: "neon-birthday",
-    name: "Neon 21st Birthday",
+    name: "Neon Cyberpunk 21st Birthday",
     emoji: "⚡",
     tagline: "High-octane cyberpunk nightlife with UV glow bars, LED dancefloor, and electronic beats",
     badge: "Trending Nightlife",
@@ -341,12 +409,68 @@ export const DEMO_PRESETS: DemoPreset[] = [
         signature_activity: "Luminescent UV Paint Bar & 360 Matrix Glitch Booth: Guests get neon tribal and geometric facial designs painted before stepping into a high-speed rotating camera booth with retro glitch video filters.",
         curated_playlist_vibe: "High-energy French Touch, Future House, Synthwave and Tech-House featuring Fred again.., Disclosure, Peggy Gou, Daft Punk, and Fisher.",
         invitation_copy: "SYSTEM REBOOT: Turn on, tune in, and light up the dark. Step into Neo-Tokyo as we celebrate 21 years on this planet. Dress in neon, iridescent, or midnight black. Let's make the bass rumble."
+      },
+      dietary_breakdown: [
+        {
+          category: "Late Night Street-Food (Omnivore)",
+          estimated_percentage: 60,
+          recommended_substitutions: "Korean BBQ beef sliders with kimchi slaw; crispy chicken bao buns with spicy gochujang aioli.",
+          chef_note: "Designed as hand-held, mess-free finger foods ready for the active dancefloor."
+        },
+        {
+          category: "Vegan / Plant-Based",
+          estimated_percentage: 30,
+          recommended_substitutions: "Crispy panko avocado sliders; glazed shiitake bao buns with crushed peanuts.",
+          chef_note: "Clearly labeled with neon glow toothpicks for easy identification."
+        },
+        {
+          category: "Non-Alcoholic Mocktails",
+          estimated_percentage: 25,
+          recommended_substitutions: "Electric blue butterfly pea flower lemonade with tonic water glow effect; sparkling yuzu ginger beer.",
+          chef_note: "Served in luminescent cups with LED ice cubes."
+        }
+      ],
+      day_of_schedule: [
+        {
+          time: "20:00 - 21:00",
+          activity: "Cyberpunk Doors Open & UV Glow Paint Activation",
+          lead_coordinator_or_vendor: "Venue Host & Body Art Duo",
+          logistical_cue: "Activate blacklights; provide welcome glowing shots to guests entering the tunnel."
+        },
+        {
+          time: "21:00 - 22:30",
+          activity: "DJ Warmup Set & Interactive 360 Video Booth Launch",
+          lead_coordinator_or_vendor: "DJ & 360 Camera Technician",
+          logistical_cue: "Ambient synthwave shifts into punchy tech-house; queue passed sliders."
+        },
+        {
+          time: "23:45 - 00:15",
+          activity: "Midnight Birthday Countdown & Cryo-Fog Confetti Blast",
+          lead_coordinator_or_vendor: "DJ & Stage Effects Tech",
+          logistical_cue: "Trigger CO2 cryo jets and metallic fuchsia confetti burst as birthday cake is wheeled out."
+        },
+        {
+          time: "00:15 - 02:00",
+          activity: "Peak EDM Rave Dancefloor & Neon Midnight Pizza Delivery",
+          lead_coordinator_or_vendor: "DJ & Catering Crew",
+          logistical_cue: "Serve hot square-cut Detroit style pizza slices in neon LED pizza boxes."
+        }
+      ],
+      logistics_contingency: {
+        seating_and_floorplan_advice: "Open central perimeter with lounge pods composed of inflatable black vinyl sofas and LED wireframe cube coffee tables, preserving 75% of room volume as an unrestricted dance zone.",
+        weather_contingency_plan: "100% indoor climate-controlled warehouse venue; industrial ventilation and redundant air conditioning units running continuously to handle party heat.",
+        emergency_kit_essentials: [
+          "High-fidelity silicone concert earplugs for guest comfort",
+          "Hydration electrolyte powder packs and bottled water cases",
+          "Heavy duty gaffer tape for audio cable floor securing",
+          "Universal multi-head phone charging bank stations"
+        ]
       }
     }
   },
   {
     id: "tech-hackathon-gala",
-    name: "Tech Hackathon Gala",
+    name: "Global Tech Hackathon Finale Gala",
     emoji: "🚀",
     tagline: "Inspiring demo day finale with investor mixers, high-tech stages, and celebration dinner",
     badge: "Corporate & Tech",
@@ -488,6 +612,468 @@ export const DEMO_PRESETS: DemoPreset[] = [
         signature_activity: "Real-time AI Pitch Battle & Crowd Staking: Audience members receive digital event tokens via NFC smart badges to vote in real-time on live leaderboards displayed across the auditorium LED wall.",
         curated_playlist_vibe: "Progressive ambient electronic, cinematic downtempo, and modern minimalist pulses featuring Max Cooper, Tycho, Jon Hopkins, and Bonobo.",
         invitation_copy: "Witness the genesis of tomorrow's breakthroughs. You are cordially invited to the Global AI Innovators Finale Gala. Join top founders, creators, and visionaries for an unforgettable evening of live demos, investor networking, and high-impact innovation."
+      },
+      dietary_breakdown: [
+        {
+          category: "Brain-Fuel Plant-Forward",
+          estimated_percentage: 35,
+          recommended_substitutions: "Warm quinoa avocado bowls with roasted chickpeas and turmeric ginger dressing; matcha chia seed pudding.",
+          chef_note: "Designed with low-glycemic, sustained-energy ingredients to prevent afternoon slump."
+        },
+        {
+          category: "Halal & Kosher Friendly",
+          estimated_percentage: 20,
+          recommended_substitutions: "Certified Halal za'atar chicken skewers with garlic toum; pomegranate couscous salad.",
+          chef_note: "Sourced from certified purveyors with separate heating ovens."
+        },
+        {
+          category: "Gluten-Free & Dairy-Free",
+          estimated_percentage: 18,
+          recommended_substitutions: "Crispy wild salmon rice paper rolls; coconut milk mango tapioca cups.",
+          chef_note: "All allergen-free stations clearly denoted with color-coded QR menu cards."
+        }
+      ],
+      day_of_schedule: [
+        {
+          time: "16:00 - 17:00",
+          activity: "Founder Showcase & Interactive Prototype Demo Floor",
+          lead_coordinator_or_vendor: "Booth Operations & AV Director",
+          logistical_cue: "Broadcast ambient electronic soundscapes; open cold beverage stations."
+        },
+        {
+          time: "17:15 - 19:00",
+          activity: "Top 10 Finalist Pitch Presentations on Keynote Stage",
+          lead_coordinator_or_vendor: "Stage Emcee & Live Broadcast Crew",
+          logistical_cue: "Strict 4-minute presentation timers on confidence monitors; live stream feed on."
+        },
+        {
+          time: "19:00 - 19:45",
+          activity: "VIP Investor Mixer & Deliberation Intermission",
+          lead_coordinator_or_vendor: "Investor Relations & Head of Catering",
+          logistical_cue: "Passed brain-fuel hors d'oeuvres; judging panel convenes in the private boardroom."
+        },
+        {
+          time: "20:00 - 21:30",
+          activity: "Grand Awards Ceremony, Trophy Reveal & Celebration Reception",
+          lead_coordinator_or_vendor: "Executive Emcee & Stage Effects",
+          logistical_cue: "Trigger crystal trophy fanfare and live audience staking leaderboard reveal."
+        }
+      ],
+      logistics_contingency: {
+        seating_and_floorplan_advice: "Tiered auditorium seating for the pitch competition transitioning seamlessly into an open atrium networking floor with high-top cocktail tables and dual projection screens.",
+        weather_contingency_plan: "Fully enclosed state-of-the-art tech conference facility with underground parking and covered pedestrian skyways; zero outdoor exposure risk.",
+        emergency_kit_essentials: [
+          "Emergency cellular 5G mobile hotspot routers for backup network failover",
+          "Spare wireless HDMI transmitters and universal USB-C display adapters",
+          "Fresh AAA/AA battery packs for all presentation clickers and microphones",
+          "Dedicated medical first-aid kit and automated external defibrillator (AED)"
+        ]
+      }
+    }
+  },
+  {
+    id: "cultural-sangeet",
+    name: "Grand Cultural Sangeet & Reception",
+    emoji: "🪔",
+    tagline: "Vibrant royal celebration with marigold floral canopies, live dhol, and lavish royal banquet",
+    badge: "Heritage & Cultural",
+    data: {
+      eventType: "Cultural Celebration",
+      eventTitle: "Royal Heritage Sangeet & Grand Reception",
+      guestCount: 350,
+      totalBudget: 1800000,
+      currency: "INR",
+      vibe: "Royal Rajasthani heritage, golden chandeliers, rich crimson & saffron silk drapes, festive dhol rhythm",
+      locationOrVenue: "Heritage Palace Courtyard & Royal Ballroom, Jaipur",
+      specialRequirements: "Authentic multi-regional Indian banquet (North Indian, Chaat Street, Mughlai), live brass band, choreographed family dance stage",
+    },
+    mockBlueprint: {
+      event_title: "Royal Heritage Sangeet & Grand Reception",
+      theme_tagline: "Rhythms of Royalty: An Opulent Evening of Sangeet, Heritage & Festivity",
+      audience_profile: "Multigenerational extended families, lifelong friends, and wedding guests traveling from across the globe.",
+      total_budget: 1800000,
+      currency: "INR",
+      budget_breakdown: [
+        {
+          category: "Heritage Palace & Ballroom Venue",
+          percentage: 30,
+          estimated_cost: 540000,
+          cost_saving_tip: "Bundle sangeet evening and next-day reception hall booking with the palace management for a 12% combined booking waiver."
+        },
+        {
+          category: "Lavish Multi-Course Royal Banquet",
+          percentage: 32,
+          estimated_cost: 576000,
+          cost_saving_tip: "Feature live regional interactive chaat and tandoor counters instead of doubling up on seated plated services."
+        },
+        {
+          category: "Traditional Marigold & Silk Floral Decor",
+          percentage: 16,
+          estimated_cost: 288000,
+          cost_saving_tip: "Source fresh yellow and orange marigold strings and jasmine buds directly from wholesale flower mandis."
+        },
+        {
+          category: "Stage AV, Live Dhol & DJ Sound Rig",
+          percentage: 12,
+          estimated_cost: 216000,
+          cost_saving_tip: "Book a hybrid Bollywood-fusion DJ who brings integrated live percussionists as a package deal."
+        },
+        {
+          category: "Traditional Favors, Mehndi & Photography",
+          percentage: 10,
+          estimated_cost: 180000,
+          cost_saving_tip: "Handcraft brass souvenir diya sets with personalized sweet boxes purchased directly from artisan guilds."
+        }
+      ],
+      timeline_milestones: [
+        {
+          phase: "Phase 1: 3 Months Out (Venue & Artists)",
+          tasks: [
+            {
+              task_name: "Lock Heritage Courtyard & Dance Stage Staging",
+              priority: "High",
+              description: "Finalize palace contract; specify heavy load-bearing wooden stage suitable for group choreography."
+            },
+            {
+              task_name: "Book Live Dhol Troupe & Emcee Choreographer",
+              priority: "High",
+              description: "Share choreography song list for couple and extended family performances."
+            }
+          ]
+        },
+        {
+          phase: "Phase 2: 1 Month Out (Tastings & Decor)",
+          tasks: [
+            {
+              task_name: "Banquet Menu Tasting & Live Counter Selection",
+              priority: "High",
+              description: "Approve Dal Baati Churma, Paneer Tikka Angara, Dum Biryani, and Jalebi-Rabri live fry station."
+            },
+            {
+              task_name: "Fabric Drape & Brass Chandelier Mockup",
+              priority: "Medium",
+              description: "Review saffron and emerald velvet drapes with royal courtyard fairy canopy lighting."
+            }
+          ]
+        },
+        {
+          phase: "Phase 3: Event Day Execution",
+          tasks: [
+            {
+              task_name: "Courtyard Rangoli & Flower Petal Welcome Prep",
+              priority: "Medium",
+              description: "Complete 12-foot central floral rangoli and stage rose-petal welcome showers at the main archway."
+            },
+            {
+              task_name: "Choreographed Sangeet Sequence & DJ Transition",
+              priority: "High",
+              description: "Execute 10 family dance performances followed by explosive open dancefloor dhol jam."
+            }
+          ]
+        }
+      ],
+      vendor_checklists: [
+        {
+          vendor_type: "Heritage Palace Venue Manager",
+          suggested_deliverables: [
+            "Access to courtyard and banquet hall from 12:00 PM to 2:00 AM",
+            "Power generators with automatic 10-second changeover switch",
+            "Dedicated bridal and family changing suites with security"
+          ],
+          negotiation_questions: [
+            "What is the policy on live fireworks and sparkler cold pyros outdoors?",
+            "Can royal guest golf carts be provided for elder transportation?",
+            "Are sound curfews flexible if music transitions from courtyard to indoor hall after 10 PM?"
+          ],
+          red_flags_to_avoid: [
+            "Inadequate parking facilities for high guest vehicle volumes",
+            "Lack of clean, high-capacity restroom facilities for 350+ guests",
+            "Hidden royalty fees for external traditional dessert catering"
+          ]
+        },
+        {
+          vendor_type: "Royal Indian Banquet Caterer",
+          suggested_deliverables: [
+            "30+ item royal dinner buffet including live street food counters",
+            "Dedicated tea, coffee, and fresh sugarcane/thandai beverage stalls",
+            "1 server per 10 guests with royal traditional attire"
+          ],
+          negotiation_questions: [
+            "Are separate Jain and pure-vegetarian prep stations guaranteed?",
+            "What is the live sweet counter refill protocol during peak dinner rush?",
+            "Can morning-after breakfast packaging be arranged for leftover sweets?"
+          ],
+          red_flags_to_avoid: [
+            "Recycled cooking oils or unclear ghee authentication",
+            "Slow buffet line replenishment causing long guest queues",
+            "Unsupervised dish collection leading to clutter in courtyard"
+          ]
+        }
+      ],
+      personalized_ideas: {
+        decor_concept: "Royal Mewar Heritage: Rich crimson and saffron silk drapery suspended from royal stone arches, 1,000 brass floating oil diyas, fragrant fresh marigold garlands, and majestic gold filigree screens.",
+        signature_activity: "Royal Dhol Battle & Custom Henna Lounge: A high-energy live percussion challenge pitting family sides against each other, accompanied by an artisanal henna corner with fragrant organic oils.",
+        curated_playlist_vibe: "Joyful celebratory fusion: Classic Rajasthani folk dholak rhythms, timeless Bollywood sangeet anthems, Punjabi bhangra beats, and global diaspora upbeat dance remixes.",
+        invitation_copy: "With the blessings of our ancestors and boundless joy in our hearts, we invite you to a royal evening of music, dance, and festivity. Join us as we celebrate our heritage, love, and family harmony under a canopy of stars."
+      },
+      dietary_breakdown: [
+        {
+          category: "Pure Vegetarian (Shakahari)",
+          estimated_percentage: 55,
+          recommended_substitutions: "Paneer Lababdar, Dal Makhani slow-cooked 18 hours, stuffed Kulchas and saffron Pulao.",
+          chef_note: "Strict traditional vegetarian preparation with 100% pure deshi ghee."
+        },
+        {
+          category: "Jain Vegetarian (No Onion / Garlic / Root Veg)",
+          estimated_percentage: 20,
+          recommended_substitutions: "Jain Paneer Makhana Korma, raw banana kofta curry, yellow moong dal tadka.",
+          chef_note: "Prepared in a separate consecrated kitchen vessel with dedicated ladle sets."
+        },
+        {
+          category: "Awadhi / Mughlai Non-Veg",
+          estimated_percentage: 25,
+          recommended_substitutions: "Dum Mutton Biryani, Chicken Tikka Angara, Galouti kebabs on mini parathas.",
+          chef_note: "Served at an independent banquet counter on the western pavilion."
+        }
+      ],
+      day_of_schedule: [
+        {
+          time: "18:00 - 19:15",
+          activity: "Royal Shehnai Welcome, Rose Petal Showers & Chaat Street Activation",
+          lead_coordinator_or_vendor: "Palace Greeters & Shehnai Troupe",
+          logistical_cue: "Shower guests with fresh rose petals as royal turbans (safas) are tied for gentlemen."
+        },
+        {
+          time: "19:30 - 21:00",
+          activity: "Choreographed Family Sangeet Performances & Couple Ring Exchange",
+          lead_coordinator_or_vendor: "Emcee, DJ & Dance Choreographer",
+          logistical_cue: "Dim courtyard lanterns; spotlight stage center for family dance numbers."
+        },
+        {
+          time: "21:00 - 22:30",
+          activity: "Grand Royal Feast & Live Dessert Counter (Jalebi & Kulfi Falooda)",
+          lead_coordinator_or_vendor: "Banquet Operations Manager",
+          logistical_cue: "Open 6 dual-sided buffet lines to eliminate guest wait times."
+        },
+        {
+          time: "22:30 - 01:00",
+          activity: "Live Dhol Midnight Jam & Indoor Ballroom Celebration",
+          lead_coordinator_or_vendor: "Live Dhol Troupe & Resident DJ",
+          logistical_cue: "Transition crowd to air-conditioned palace ballroom for extended dance music."
+        }
+      ],
+      logistics_contingency: {
+        seating_and_floorplan_advice: "Traditional low-seating royal Baithak lounge with silk bolster pillows and brass tables adjacent to the main stage for senior family members; round banquet tables with gold Chiavari chairs surrounding.",
+        weather_contingency_plan: "Palace inner heritage ballroom on standby with pre-rigged lighting; seamless transition within 15 minutes if unseasonal showers occur.",
+        emergency_kit_essentials: [
+          "Emergency saree safety pin kits, bobby pins, and floral hair accessories",
+          "Shoe bite balm and comfortable velvet flat slip-on sandals",
+          "Portable stain remover pens for turmeric / mehendi accidents",
+          "Ayurvedic digestion carminative tablets (Hajmola / Pudin Hara)"
+        ]
+      }
+    }
+  },
+  {
+    id: "golden-anniversary",
+    name: "Luxury Château Golden 50th Anniversary",
+    emoji: "🥂",
+    tagline: "Intimate Parisian luxury with vintage grand cru pairings, string quartet, and golden candlelit dinner",
+    badge: "Milestone Luxury",
+    data: {
+      eventType: "Anniversary Celebration",
+      eventTitle: "Golden 50th Wedding Jubilee Celebration",
+      guestCount: 60,
+      totalBudget: 18000,
+      currency: "EUR",
+      vibe: "Parisian classical elegance, crystal chandeliers, antique gold candelabras, white garden roses, classical strings",
+      locationOrVenue: "Historic French Château & Orangerie, Loire Valley",
+      specialRequirements: "Curated 5-course French wine-pairing menu, live string quartet, custom vintage family photo projection",
+    },
+    mockBlueprint: {
+      event_title: "Golden 50th Wedding Jubilee Celebration",
+      theme_tagline: "Half a Century of Grace: An Intimate Golden Jubilee in the Loire Valley",
+      audience_profile: "Multigenerational family, close lifelong companions, and dearest grandchildren honoring a 50-year legacy.",
+      total_budget: 18000,
+      currency: "EUR",
+      budget_breakdown: [
+        {
+          category: "Château Orangerie & Garden Access",
+          percentage: 33,
+          estimated_cost: 5940,
+          cost_saving_tip: "Select a late spring weekday or Sunday evening to save 20% on exclusive estate rental fees."
+        },
+        {
+          category: "Michelin-Inspired 5-Course Pairing Dinner",
+          percentage: 35,
+          estimated_cost: 6300,
+          cost_saving_tip: "Curate estate-bottled Loire Valley wines (Vouvray & Chinon) directly from neighboring boutique vineyards."
+        },
+        {
+          category: "Classical String Quartet & Audio",
+          percentage: 12,
+          estimated_cost: 2160,
+          cost_saving_tip: "Contract conservatory master graduates for 4 hours covering arrival, toasts, and slow waltzes."
+        },
+        {
+          category: "Antiqued Gold Decor, Florals & Candles",
+          percentage: 12,
+          estimated_cost: 2160,
+          cost_saving_tip: "Rent antique gold vermeil candelabras and blend garden-grown white hydrangeas with spray roses."
+        },
+        {
+          category: "Heirloom Photo Archiving & Keepsakes",
+          percentage: 8,
+          estimated_cost: 1440,
+          cost_saving_tip: "Produce linen-bound foil-stamped family memory books with QR codes linking to digital archives."
+        }
+      ],
+      timeline_milestones: [
+        {
+          phase: "Phase 1: 3 Months Out (Curating Estate & Menu)",
+          tasks: [
+            {
+              task_name: "Contract Château Orangerie & Suites",
+              priority: "High",
+              description: "Reserve the south garden lawn and enclosed glass orangerie for private dining."
+            },
+            {
+              task_name: "Design 5-Course Tasting Menu with Sommelier",
+              priority: "High",
+              description: "Finalize sea bass en papillote, filet de boeuf, and grand cru dessert wine pairing."
+            }
+          ]
+        },
+        {
+          phase: "Phase 2: 4 Weeks Out (Heirloom Program & Music)",
+          tasks: [
+            {
+              task_name: "Gather 50-Year Family Archival Slides",
+              priority: "Medium",
+              description: "Digitize 1970s wedding photos for discreet 4K micro-projector retrospective reveal."
+            },
+            {
+              task_name: "Score Classical Repertoire for String Quartet",
+              priority: "Medium",
+              description: "Include original 1970s first dance waltz and romantic French chansons."
+            }
+          ]
+        },
+        {
+          phase: "Phase 3: Anniversary Day Execution",
+          tasks: [
+            {
+              task_name: "Orangerie Candelabra Lighting & Place Settings",
+              priority: "High",
+              description: "Light 40 taper candles 15 minutes before guest entry; align gold-rimmed porcelain."
+            },
+            {
+              task_name: "Golden Champagne Toast & Grandchildren Tribute",
+              priority: "High",
+              description: "Pour vintage Blanc de Blancs champagne and present engraved golden milestone clock."
+            }
+          ]
+        }
+      ],
+      vendor_checklists: [
+        {
+          vendor_type: "Château Estate Director",
+          suggested_deliverables: [
+            "Exclusive estate and garden access from 14:00 to 00:00",
+            "Heated glass orangerie with panoramic sunset view of the vineyard",
+            "On-site suites for the jubilee couple and immediate elders"
+          ],
+          negotiation_questions: [
+            "Can we host champagne aperitifs on the terrace before moving indoors for dinner?",
+            "Is there an in-house grand piano available for tuning?",
+            "What is the heating policy for the orangerie during cool evening hours?"
+          ],
+          red_flags_to_avoid: [
+            "Steep gravel pathways without wheelchair accessibility ramps for older guests",
+            "Inadequate thermal insulation in glass conservatories",
+            "Lack of dedicated private dressing quarters for honored guests"
+          ]
+        },
+        {
+          vendor_type: "Private Chef & Sommelier Team",
+          suggested_deliverables: [
+            "Plated 5-course dinner with synchronized cloche service",
+            "Sommelier wine introductions for each pairing course",
+            "French artisanal cheese trolley with local honey and sourdough"
+          ],
+          negotiation_questions: [
+            "Can customized low-sodium and diabetic dietary adaptations be made seamlessly?",
+            "Are vintage crystal glasses and silver flatware included in service quote?",
+            "Can anniversary cake cutting be accompanied by artisanal espresso service?"
+          ],
+          red_flags_to_avoid: [
+            "Slow pacing exceeding 3 hours between courses causing fatigue",
+            "Under-chilled champagne service on warm afternoons",
+            "Inflexible chefs unwilling to adjust seasonings for elderly palates"
+          ]
+        }
+      ],
+      personalized_ideas: {
+        decor_concept: "Timeless Parisian Romance: Antique gold vermeil candelabras with ivory beeswax taper candles, runners of fragrant white garden roses and jasmine vines, gold-rimmed Limoges china, and crystal stemware.",
+        signature_activity: "Heirloom Retrospective & Family Golden Waltz: A heartfelt audio-visual showcase narrating 5 decades of love, followed by the couple's commemorative waltz played live by the string quartet.",
+        curated_playlist_vibe: "Sophisticated classical and romantic French impressionism: Debussy, Ravel, Satie, classical waltzes, and gentle arrangements of Edith Piaf and Charles Aznavour.",
+        invitation_copy: "Fifty years of love, devotion, and shared dreams. You are warmly invited to celebrate the Golden Wedding Anniversary of our beloved parents. Join us for an intimate candlelit dinner in the Loire Valley."
+      },
+      dietary_breakdown: [
+        {
+          category: "Gentle Gastronomy (Senior Friendly)",
+          estimated_percentage: 40,
+          recommended_substitutions: "Tender poached turbot with velvety cauliflower mousseline; slow-simmered poultry supreme with truffled jus.",
+          chef_note: "Prepared with minimal salt, soft textures, and light sauces."
+        },
+        {
+          category: "Vegetarian Haute Cuisine",
+          estimated_percentage: 20,
+          recommended_substitutions: "Roasted king oyster mushroom scallops with pea puree; artichoke barigoule with lemon thyme.",
+          chef_note: "Artfully plated to mirror standard meat courses identically."
+        },
+        {
+          category: "Grand Cru Wine Pairings & Mocktails",
+          estimated_percentage: 40,
+          recommended_substitutions: "Non-alcoholic distilled botanicals (French herbal infusions) paired course-by-course alongside grand cru wines.",
+          chef_note: "Ensures teetotal guests enjoy equivalent pairing sophistication."
+        }
+      ],
+      day_of_schedule: [
+        {
+          time: "17:00 - 18:00",
+          activity: "Terrace Champagne Aperitif & String Quartet Serenade",
+          lead_coordinator_or_vendor: "Sommelier & String Quartet",
+          logistical_cue: "Serve vintage Blanc de Blancs with passed gougères while quartet plays gentle classical waltzes."
+        },
+        {
+          time: "18:15 - 20:30",
+          activity: "Five-Course Candlelit Jubilee Banquet in the Orangerie",
+          lead_coordinator_or_vendor: "Executive Chef & Floor Captain",
+          logistical_cue: "Synchronized cloche service at 6 tables; sommelier announces each wine pairing."
+        },
+        {
+          time: "20:30 - 21:15",
+          activity: "Heirloom Retrospective & Grandchildren's Toasts",
+          lead_coordinator_or_vendor: "Lead Coordinator & AV Tech",
+          logistical_cue: "Project digitized 1970s archive photographs on discrete canvas screen; champagne poured."
+        },
+        {
+          time: "21:30 - 23:00",
+          activity: "Anniversary Cake Reveal, Golden Waltz & Artisanal Digestifs",
+          lead_coordinator_or_vendor: "String Quartet & Pastry Chef",
+          logistical_cue: "Present 3-tier gold leaf French gateau; couple dances commemorative waltz."
+        }
+      ],
+      logistics_contingency: {
+        seating_and_floorplan_advice: "Single grand royal banquet table (or 6 circular tables of 10) with cushioned armchairs ensuring supreme comfort for elderly guests, wide pathways allowing ease of movement.",
+        weather_contingency_plan: "Château glass orangerie provides full 360-degree garden views while remaining 100% weather-proof and temperature-regulated; interior stone fireplace ready to light if temperature drops.",
+        emergency_kit_essentials: [
+          "Cashmere shawls and lightweight blankets for garden terrace lounging",
+          "Magnifying menu cards and soft warm ambient reading lights",
+          "Professional first-aid essentials and blood pressure monitor",
+          "Dedicated on-call chauffeur for elder return transportation"
+        ]
       }
     }
   }

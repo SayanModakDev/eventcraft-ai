@@ -44,6 +44,26 @@ export interface PersonalizedIdeas {
   invitation_copy: string;
 }
 
+export interface DietaryRequirement {
+  category: string;
+  estimated_percentage: number;
+  recommended_substitutions: string;
+  chef_note: string;
+}
+
+export interface DayOfScheduleItem {
+  time: string;
+  activity: string;
+  lead_coordinator_or_vendor: string;
+  logistical_cue: string;
+}
+
+export interface LogisticsAndContingency {
+  seating_and_floorplan_advice: string;
+  weather_contingency_plan: string;
+  emergency_kit_essentials: string[];
+}
+
 export interface EventPlan {
   event_title: string;
   theme_tagline: string;
@@ -54,6 +74,9 @@ export interface EventPlan {
   timeline_milestones: TimelineMilestone[];
   vendor_checklists: VendorChecklist[];
   personalized_ideas: PersonalizedIdeas;
+  dietary_breakdown?: DietaryRequirement[];
+  day_of_schedule?: DayOfScheduleItem[];
+  logistics_contingency?: LogisticsAndContingency;
   created_at?: string;
   guest_count?: number;
   location?: string;
@@ -61,12 +84,14 @@ export interface EventPlan {
 }
 
 export interface RefineRequest {
-  currentPlan: EventPlan;
+  currentPlan?: EventPlan;
   userRequest: string;
 }
 
 export interface RefineResponse {
   answer: string;
+  model_used: string;
+  is_live: boolean;
   suggestedPlanUpdate?: Partial<EventPlan>;
 }
 

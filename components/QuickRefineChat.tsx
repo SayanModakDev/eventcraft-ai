@@ -5,14 +5,11 @@ import {
   Zap,
   Send,
   X,
-  MessageSquare,
   Sparkles,
-  ChevronDown,
   Minimize2,
   Maximize2,
   Bot,
   User,
-  ArrowRight,
   RotateCcw,
 } from "lucide-react";
 import { EventPlan, ChatMessage } from "@/types/event";
@@ -28,7 +25,7 @@ const QUICK_SUGGESTIONS = [
   "Suggest gourmet plant-based dinner dishes",
   "What acoustic opening tracks work best?",
   "Hidden fees to check with the venue?",
-];
+] as const;
 
 export default function QuickRefineChat({
   currentPlan,
@@ -120,19 +117,22 @@ export default function QuickRefineChat({
   };
 
   return (
-    <div className="quick-chat-drawer no-print">
+    <aside aria-label="AI Co-pilot Assistant" className="quick-chat-drawer no-print">
       {/* Floating Action Trigger Button when closed */}
       {!isOpen && (
         <button
           id="copilot-toggle-btn"
+          type="button"
+          aria-label="Open AI Co-Pilot chat drawer"
+          tabIndex={0}
           onClick={() => {
             setIsOpen(true);
             setIsMinimized(false);
           }}
-          className="fixed bottom-6 right-6 z-50 group flex items-center space-x-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-amber-500 via-fuchsia-600 to-purple-600 text-white font-bold text-xs shadow-glow hover:shadow-glow-amber transition-all transform hover:scale-105 active:scale-95"
+          className="fixed bottom-6 right-6 z-50 group flex items-center space-x-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-amber-500 via-fuchsia-600 to-purple-600 text-white font-bold text-xs shadow-glow hover:shadow-glow-amber transition-all transform hover:scale-105 active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
         >
           <div className="relative">
-            <Zap className="w-4 h-4 text-amber-200 fill-amber-200" />
+            <Zap className="w-4 h-4 text-amber-200 fill-amber-200" aria-hidden="true" />
             <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
           </div>
           <span>AI Co-Pilot (Gemini 3.1 Flash-Lite)</span>
@@ -146,6 +146,8 @@ export default function QuickRefineChat({
       {isOpen && (
         <div
           id="copilot-drawer"
+          role="dialog"
+          aria-label="EventCraft AI Real-Time Co-Pilot"
           className={`fixed bottom-6 right-6 z-50 w-[92vw] sm:w-[420px] rounded-2xl glass-panel border border-fuchsia-500/30 shadow-2xl flex flex-col transition-all overflow-hidden ${
             isMinimized ? "h-14" : "h-[540px] max-h-[85vh]"
           }`}
@@ -153,7 +155,10 @@ export default function QuickRefineChat({
           {/* Drawer Header */}
           <div className="p-3.5 bg-slate-950/80 border-b border-white/10 flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-amber-500 to-fuchsia-600 flex items-center justify-center text-white">
+              <div
+                aria-hidden="true"
+                className="w-7 h-7 rounded-lg bg-gradient-to-tr from-amber-500 to-fuchsia-600 flex items-center justify-center text-white"
+              >
                 <Zap className="w-4 h-4 fill-white" />
               </div>
               <div>
@@ -174,33 +179,36 @@ export default function QuickRefineChat({
             <div className="flex items-center space-x-1">
               <button
                 type="button"
+                aria-label="Reset conversation history"
+                tabIndex={0}
                 onClick={handleClearHistory}
-                title="Reset conversation"
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
               >
-                <RotateCcw className="w-3.5 h-3.5" />
+                <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
 
               <button
                 type="button"
+                aria-label={isMinimized ? "Expand co-pilot drawer" : "Minimize co-pilot drawer"}
+                tabIndex={0}
                 onClick={() => setIsMinimized(!isMinimized)}
-                title={isMinimized ? "Expand" : "Minimize"}
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
               >
                 {isMinimized ? (
-                  <Maximize2 className="w-3.5 h-3.5" />
+                  <Maximize2 className="w-3.5 h-3.5" aria-hidden="true" />
                 ) : (
-                  <Minimize2 className="w-3.5 h-3.5" />
+                  <Minimize2 className="w-3.5 h-3.5" aria-hidden="true" />
                 )}
               </button>
 
               <button
                 type="button"
+                aria-label="Close co-pilot drawer"
+                tabIndex={0}
                 onClick={() => setIsOpen(false)}
-                title="Close Co-Pilot"
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
               >
-                <X className="w-4 h-4" />
+                <X className="w-4 h-4" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -211,6 +219,9 @@ export default function QuickRefineChat({
               {/* Messages Scroll Area */}
               <div
                 ref={scrollRef}
+                role="log"
+                aria-live="polite"
+                aria-label="Chat messages"
                 className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-slate-950/40 text-xs"
               >
                 {messages.map((msg) => (
@@ -221,6 +232,7 @@ export default function QuickRefineChat({
                     }`}
                   >
                     <div
+                      aria-hidden="true"
                       className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-white ${
                         msg.role === "user"
                           ? "bg-fuchsia-600"
@@ -248,12 +260,14 @@ export default function QuickRefineChat({
                         <div className="mt-2.5 pt-2 border-t border-white/10">
                           <button
                             type="button"
+                            aria-label="Apply AI suggested update to Master Event Plan"
+                            tabIndex={0}
                             onClick={() => {
                               onUpdatePlan(msg.suggestedPlanUpdate!);
                             }}
-                            className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 flex items-center space-x-1 transition-all"
+                            className="px-2.5 py-1 rounded-md text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 flex items-center space-x-1 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                           >
-                            <Sparkles className="w-3 h-3 text-amber-400" />
+                            <Sparkles className="w-3 h-3 text-amber-400" aria-hidden="true" />
                             <span>Apply this change to Master Plan</span>
                           </button>
                         </div>
@@ -268,20 +282,26 @@ export default function QuickRefineChat({
 
                 {isLoading && (
                   <div className="flex items-center space-x-2 text-slate-400 text-xs p-2">
-                    <Zap className="w-3.5 h-3.5 text-amber-400 animate-bounce" />
+                    <Zap className="w-3.5 h-3.5 text-amber-400 animate-bounce" aria-hidden="true" />
                     <span>Gemini 3.1 Flash-Lite thinking...</span>
                   </div>
                 )}
               </div>
 
               {/* Quick Prompt Pill Carousel */}
-              <div className="px-3 py-2 bg-slate-950/60 border-t border-white/5 overflow-x-auto flex space-x-1.5 scrollbar-none">
+              <div
+                role="group"
+                aria-label="Quick suggestion prompts"
+                className="px-3 py-2 bg-slate-950/60 border-t border-white/5 overflow-x-auto flex space-x-1.5 scrollbar-none"
+              >
                 {QUICK_SUGGESTIONS.map((suggestion) => (
                   <button
                     key={suggestion}
                     type="button"
+                    tabIndex={0}
+                    aria-label={`Ask: ${suggestion}`}
                     onClick={() => handleSendMessage(suggestion)}
-                    className="shrink-0 text-[10px] px-2.5 py-1 rounded-full bg-slate-900 border border-white/10 hover:border-amber-400/50 hover:text-amber-300 text-slate-300 transition-colors"
+                    className="shrink-0 text-[11px] px-2.5 py-1 rounded-full bg-slate-900 border border-white/10 hover:border-amber-400/50 hover:text-amber-300 text-slate-300 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                   >
                     {suggestion}
                   </button>
@@ -290,6 +310,9 @@ export default function QuickRefineChat({
 
               {/* Input Bar */}
               <div className="p-3 bg-slate-950/90 border-t border-white/10 flex items-center space-x-2">
+                <label htmlFor="copilot-input" className="sr-only">
+                  Ask AI Co-Pilot a question or request plan modification
+                </label>
                 <input
                   id="copilot-input"
                   type="text"
@@ -302,22 +325,24 @@ export default function QuickRefineChat({
                     }
                   }}
                   placeholder="Ask to adjust guest count, cut budget, etc..."
-                  className="flex-1 glass-input px-3 py-2 rounded-xl text-xs placeholder:text-slate-500 focus:border-amber-400"
+                  className="flex-1 glass-input px-3 py-2 rounded-xl text-xs placeholder:text-slate-500 focus:border-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                 />
                 <button
                   id="copilot-submit-btn"
                   type="button"
+                  aria-label="Send message to AI co-pilot"
+                  tabIndex={0}
                   disabled={isLoading || !input.trim()}
                   onClick={() => handleSendMessage()}
-                  className="p-2 rounded-xl bg-gradient-to-r from-amber-500 to-fuchsia-600 text-white hover:opacity-90 disabled:opacity-40 transition-all shrink-0"
+                  className="p-2 rounded-xl bg-gradient-to-r from-amber-500 to-fuchsia-600 text-white hover:opacity-90 disabled:opacity-40 transition-all shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                 >
-                  <Send className="w-3.5 h-3.5" />
+                  <Send className="w-3.5 h-3.5" aria-hidden="true" />
                 </button>
               </div>
             </>
           )}
         </div>
       )}
-    </div>
+    </aside>
   );
 }
